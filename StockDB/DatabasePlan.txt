@@ -1,0 +1,61 @@
+# Stock Database Plan
+
+## Tables
+
+### Stocks
+- `stock_id` (Primary Key)
+- `ticker_symbol`
+- `company_name`
+- `sector`
+- `industry`
+- `market_cap`
+- `ipo_date`
+
+### StockPrices
+- `price_id` (Primary Key)
+- `stock_id` (Foreign Key)
+- `date`
+- `open_price`
+- `close_price`
+- `high_price`
+- `low_price`
+- `volume`
+
+### StockNews
+- `news_id` (Primary Key)
+- `stock_id` (Foreign Key)
+- `date`
+- `headline`
+- `source`
+- `content`
+- `sentiment_score`
+
+### StockAnalytics
+- `analytics_id` (Primary Key)
+- `stock_id` (Foreign Key)
+- `date`
+- `moving_average`
+- `rsi`
+- `macd`
+- `bollinger_bands`
+- `sentiment_analysis`
+
+### StockTransactions
+- `transaction_id` (Primary Key)
+- `stock_id` (Foreign Key)
+- `date`
+- `transaction_type` (buy/sell)
+- `quantity`
+- `price`
+
+## Relationships
+- Each `Stock` can have multiple `StockPrices`, `StockNews`, `StockAnalytics`, and `StockTransactions`.
+
+## Indexes
+- Create indexes on `ticker_symbol` in `Stocks` for faster lookups.
+- Create indexes on `date` in `StockPrices`, `StockNews`, and `StockAnalytics` for efficient time-series queries.
+
+## Additional Considerations
+- Ensure data integrity with foreign key constraints.
+- Use partitioning for large tables like `StockPrices` and `StockNews` to improve performance.
+- Regularly update and maintain indexes for optimal query performance.
