@@ -1,0 +1,50 @@
+
+services:
+  backend:
+    build: ./backend
+    container_name: management-backend
+    environment:
+      - DATABASE_URL=postgresql://management_user:${POSTGRES_PASSWORD:-defaultpassword}@db:5432/management
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  frontend:
+    build: ./frontend
+    container_name: management-frontend
+    depends_on:
+      - backend
+    networks:
+      - app-network
+    ports:
+      - "3000:3000"  # Next.js toimii portissa 3000
+
+  db:
+    image: postgres:15
+    container_name: management-db
+    environment:
+      - POSTGRES_USER=management_user
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-defaultpassword}
+      - POSTGRES_DB=management
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  nginx:
+    build: ./nginx
+    container_name: management-nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+
+volumes:
+  postgres_data:
