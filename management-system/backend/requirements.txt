@@ -2,4 +2,12 @@ fastapi
 uvicorn
 websockets
 sqlalchemy
+psycopg2-binary
 asyncpg
+pymongo
+cryptography
+python-jose
+python-multipart
+pydantic
+email-validator
+cryptography
