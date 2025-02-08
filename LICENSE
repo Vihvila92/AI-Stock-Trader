@@ -1,6 +1,6 @@
 # MIT License
 
-Copyright (c) [2023] [Valtteri Vehviläinen]
+Copyright (c) 2024 Valtteri Vehviläinen
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Disclaimer: This software is intended for educational and informational purposes only.
-The author is not a financial advisor, and the software should not be construed as financial advice.
-Use of this software for trading stocks or other financial instruments is at your own risk.
-The author is not responsible for any financial losses or damages that may occur as a result of using this software.
+Trading Disclaimer:
+This software is an experimental project and is provided strictly for educational
+and research purposes. It is not intended for actual trading or financial
+decision-making. The author makes no guarantees about the accuracy or reliability
+of the system and accepts no responsibility for any financial losses or damages
+that may result from its use. Users are advised to exercise extreme caution and
+consult with qualified financial professionals before making any investment decisions.

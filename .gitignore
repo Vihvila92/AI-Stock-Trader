@@ -40,3 +40,6 @@ ssl/*.crt
 logs/
 *.log
 .cache/
+
+.venv/
+.vscode/
