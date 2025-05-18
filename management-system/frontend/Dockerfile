@@ -1,15 +1,10 @@
-# Käytetään Node.js:n LTS-versiota
-FROM node:18 AS build
-
+FROM node:18-alpine
 WORKDIR /app
-
-# Kopioidaan riippuvuustiedostot ja asennetaan ne
-COPY package.json package-lock.json ./
+COPY package*.json ./
 RUN npm install
-
-# Kopioidaan koko lähdekoodi ja rakennetaan Next.js-sovellus
 COPY . .
 RUN npm run build
-
-# Käytetään kevyttä Next.js:n omaa palvelinta tuotantotilassa
-CMD ["npm", "run", "start"]
+# Kopioi Next.js standalone buildin vaatimat tiedostot juureen
+RUN cp -r .next/standalone/* ./ && cp -r .next/static ./
+EXPOSE 3000
+CMD ["node", "server.js"]

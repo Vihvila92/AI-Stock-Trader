@@ -1,50 +1,37 @@
-
+version: "3.9"
 services:
   backend:
     build: ./backend
-    container_name: management-backend
+    ports:
+      - "8000:8000"
     environment:
-      - DATABASE_URL=postgresql://management_user:${POSTGRES_PASSWORD:-defaultpassword}@db:5432/management
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/management
     depends_on:
       - db
-    networks:
-      - app-network
+    volumes:
+      - ./backend/alembic/versions:/app/alembic/versions
+
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: management
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
 
   frontend:
     build: ./frontend
-    container_name: management-frontend
+    ports:
+      - "3000:3000"
     depends_on:
       - backend
-    networks:
-      - app-network
-    ports:
-      - "3000:3000"  # Next.js toimii portissa 3000
-
-  db:
-    image: postgres:15
-    container_name: management-db
     environment:
-      - POSTGRES_USER=management_user
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-defaultpassword}
-      - POSTGRES_DB=management
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - app-network
-
-  nginx:
-    build: ./nginx
-    container_name: management-nginx
-    ports:
-      - "80:80"
-    depends_on:
-      - frontend
-      - backend
-    networks:
-      - app-network
-
-networks:
-  app-network:
+      - NEXT_PUBLIC_API_URL=http://backend:8000
+    # Poistettu kaikki volumes-mountit, jotta buildin tulos ei mene rikki
 
 volumes:
-  postgres_data:
+  pgdata:

@@ -1,13 +1,10 @@
+# Backend requirements for FastAPI + PostgreSQL (async)
 fastapi
-uvicorn
-websockets
-sqlalchemy
-psycopg2-binary
+uvicorn[standard]
+sqlalchemy[asyncio]
 asyncpg
-pymongo
-cryptography
-python-jose
-python-multipart
+alembic
+psycopg2-binary
+bcrypt
 pydantic
-email-validator
-cryptography
+passlib[bcrypt]
