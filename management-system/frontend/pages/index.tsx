@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AdminSetup from './AdminSetup';
 import Login from './Login';
+import DashboardLayout from './DashboardLayout';
 
 interface User {
   id: number;
@@ -15,8 +16,7 @@ export default function Home() {
 
   useEffect(() => {
     setSession(!!localStorage.getItem('session'));
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
-    fetch(`${apiUrl}/api/users`)
+    fetch('/api/users')
       .then(async res => {
         if (!res.ok) {
           const text = await res.text();
@@ -46,46 +46,56 @@ export default function Home() {
   }, []);
 
   if (loading) {
-    return <main style={{ padding: 32 }}>
-      <p>Loading...</p>
-      <pre style={{ color: '#888', fontSize: 12 }}>
-        NEXT_PUBLIC_API_URL: {process.env.NEXT_PUBLIC_API_URL || 'not set'}
-      </pre>
-    </main>;
+    return <DashboardLayout>
+      <main style={{ padding: 32 }}>
+        <p>Loading...</p>
+        <pre style={{ color: '#888', fontSize: 12 }}>
+          NEXT_PUBLIC_API_URL: {process.env.NEXT_PUBLIC_API_URL || 'not set'}
+        </pre>
+      </main>
+    </DashboardLayout>;
   }
 
   if (error) {
-    return <main style={{ padding: 32, color: 'red' }}>
-      <h2>Virhe</h2>
-      <pre>{error}</pre>
-      <pre style={{ color: '#888', fontSize: 12 }}>
-        NEXT_PUBLIC_API_URL: {process.env.NEXT_PUBLIC_API_URL || 'not set'}
-      </pre>
-      <button onClick={() => window.location.reload()}>Yritä uudelleen</button>
-    </main>;
+    return <DashboardLayout>
+      <main style={{ padding: 32, color: 'red' }}>
+        <h2>Virhe</h2>
+        <pre>{error}</pre>
+        <pre style={{ color: '#888', fontSize: 12 }}>
+          NEXT_PUBLIC_API_URL: {process.env.NEXT_PUBLIC_API_URL || 'not set'}
+        </pre>
+        <button onClick={() => window.location.reload()}>Yritä uudelleen</button>
+      </main>
+    </DashboardLayout>;
   }
 
   // Jos adminia ei ole, näytä adminin luonti
   const adminExists = users.some(u => u.username === 'admin');
   if (!adminExists) {
-    return <AdminSetup onAdminCreated={() => window.location.reload()} />;
+    return <DashboardLayout>
+      <AdminSetup onAdminCreated={() => window.location.reload()} />
+    </DashboardLayout>;
   }
 
   // Jos ei sessiota, näytä kirjautuminen
   if (!session) {
-    return <Login onLogin={() => setSession(true)} />;
+    return <DashboardLayout>
+      <Login onLogin={() => setSession(true)} />
+    </DashboardLayout>;
   }
 
   // Jos sessio, näytä pääsivu
   return (
-    <main style={{ padding: 32 }}>
-      <h1>Tervetuloa!</h1>
-      <p>Olet kirjautunut sisään.</p>
-      <ul>
-        {users.map(user => (
-          <li key={user.id}>{user.username}</li>
-        ))}
-      </ul>
-    </main>
+    <DashboardLayout>
+      <main style={{ padding: 32 }}>
+        <h1>Tervetuloa!</h1>
+        <p>Olet kirjautunut sisään.</p>
+        <ul>
+          {users.map(user => (
+            <li key={user.id}>{user.username}</li>
+          ))}
+        </ul>
+      </main>
+    </DashboardLayout>
   );
 }

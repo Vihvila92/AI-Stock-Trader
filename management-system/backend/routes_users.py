@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
+from sqlalchemy import select, delete, asc
 from models import User
 from db import engine
 from pydantic import BaseModel
@@ -30,5 +30,25 @@ async def create_user(user: UserCreate):
         hashed_pw = bcrypt.hash(user.password)
         new_user = User(username=user.username, hashed_password=hashed_pw, is_active=1)
         session.add(new_user)
+        await session.flush()
+        user_id = new_user.id
+        username = new_user.username
         await session.commit()
-        return {"id": new_user.id, "username": new_user.username}
+    return {"id": user_id, "username": username}
+
+@router.delete("/users/{user_id}")
+async def delete_user(user_id: int):
+    async with AsyncSession(engine) as session:
+        # Selvitä ensimmäisen (pienimmän id:n) käyttäjän id
+        result = await session.execute(select(User).order_by(asc(User.id)).limit(1))
+        first_user = result.scalar_one_or_none()
+        if first_user and user_id == first_user.id:
+            raise HTTPException(status_code=403, detail="Et voi poistaa ensimmäistä admin-tunnusta.")
+        # Poista käyttäjä, jos löytyy
+        result = await session.execute(select(User).where(User.id == user_id))
+        user = result.scalar_one_or_none()
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        await session.delete(user)
+        await session.commit()
+    return {"status": "ok"}

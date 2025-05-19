@@ -29,6 +29,8 @@ build/
 
 # Postgres Docker volume (optional, if you want to ignore local db data)
 pgdata/
+management-system/db/
+management-system/pgdata/
 
 # Misc
 *.log
@@ -37,6 +39,14 @@ coverage/
 
 # Alembic
 alembic/versions/*.pyc
+backend/__pycache__/
+backend/.env
+backend/.env.*
+frontend/.next/
+frontend/node_modules/
+frontend/.env.local
+backend/alembic/versions/*.pyc
+backend/alembic/versions/__pycache__/
 
 # Ignore local dev/test files
 *.local

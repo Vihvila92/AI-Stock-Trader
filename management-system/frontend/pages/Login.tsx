@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import DashboardLayout from "./DashboardLayout";
 
 interface Props {
   onLogin: () => void;
@@ -27,20 +28,24 @@ export default function Login({ onLogin }: Props) {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: 320, margin: 'auto', padding: 32 }}>
-      <h2>Kirjaudu sisään</h2>
-      <div>
-        <label>Käyttäjätunnus</label>
-        <input value={username} onChange={e => setUsername(e.target.value)} required style={{ width: '100%' }} />
-      </div>
-      <div style={{ marginTop: 12 }}>
-        <label>Salasana</label>
-        <input type="password" value={password} onChange={e => setPassword(e.target.value)} required style={{ width: '100%' }} />
-      </div>
-      {error && <div style={{ color: 'red', marginTop: 12 }}>{error}</div>}
-      <button type="submit" disabled={loading} style={{ marginTop: 16, width: '100%' }}>
-        {loading ? 'Kirjaudutaan...' : 'Kirjaudu'}
-      </button>
-    </form>
+    <DashboardLayout>
+      <main className="max-w-md mx-auto bg-white rounded shadow p-6 mt-8">
+        <form onSubmit={handleSubmit} style={{ maxWidth: 320, margin: 'auto', padding: 32 }}>
+          <h2>Kirjaudu sisään</h2>
+          <div>
+            <label>Käyttäjätunnus</label>
+            <input value={username} onChange={e => setUsername(e.target.value)} required style={{ width: '100%' }} />
+          </div>
+          <div style={{ marginTop: 12 }}>
+            <label>Salasana</label>
+            <input type="password" value={password} onChange={e => setPassword(e.target.value)} required style={{ width: '100%' }} />
+          </div>
+          {error && <div style={{ color: 'red', marginTop: 12 }}>{error}</div>}
+          <button type="submit" disabled={loading} style={{ marginTop: 16, width: '100%' }}>
+            {loading ? 'Kirjaudutaan...' : 'Kirjaudu'}
+          </button>
+        </form>
+      </main>
+    </DashboardLayout>
   );
 }
