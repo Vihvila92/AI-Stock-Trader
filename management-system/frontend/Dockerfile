@@ -1,15 +1,19 @@
-# Käytetään Node.js:n LTS-versiota
-FROM node:18 AS build
-
+# Kehitystila (dev)
+FROM node:18-bullseye as dev
 WORKDIR /app
-
-# Kopioidaan riippuvuustiedostot ja asennetaan ne
-COPY package.json package-lock.json ./
+COPY package*.json ./
 RUN npm install
+COPY . .
+EXPOSE 3000
+CMD ["npm", "run", "dev"]
 
-# Kopioidaan koko lähdekoodi ja rakennetaan Next.js-sovellus
+# Tuotantotila (production)
+FROM node:18-alpine as production
+WORKDIR /app
+COPY package*.json ./
+RUN npm install --omit=dev
 COPY . .
 RUN npm run build
-
-# Käytetään kevyttä Next.js:n omaa palvelinta tuotantotilassa
-CMD ["npm", "run", "start"]
+RUN cp -r .next/standalone/* ./ && cp -r .next/static ./
+EXPOSE 3000
+CMD ["node", "server.js"]
