@@ -84,7 +84,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
             except Exception as e:
                 print(f"[DEBUG] bcrypt.verify exception: {e}")
         print(f"[DEBUG] Login attempt for user: {form_data.username}")
-        print(f"[DEBUG] Input password: {input_password}")
+        print(f"[DEBUG] Password verification initiated for user: {form_data.username}")
         print(f"[DEBUG] DB hash: {db_hash}")
         print(f"[DEBUG] bcrypt.verify result: {verify_result}")
         if user is None or not verify_result:
