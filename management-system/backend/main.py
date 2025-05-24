@@ -7,7 +7,9 @@ import os
 from models import Base, Setting
 from sqlalchemy import text
 from db import engine
+import logging
 
+logging.basicConfig(level=logging.ERROR)
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+asyncpg://postgres:postgres@localhost:5432/management")
 
 app = FastAPI()
@@ -31,4 +33,6 @@ async def health():
             await conn.execute(text("SELECT 1"))
         return {"status": "ok", "db": "ok"}
     except Exception as e:
-        return {"status": "error", "db": str(e)}
+        import logging
+        logging.error("Database health check failed", exc_info=True)
+        return {"status": "error", "db": "unavailable"}
