@@ -31,10 +31,10 @@ jobs:
               TAG="latest"
               ;;
             test)
-              TAG="test"
+              TAG="Test"
               ;;
             dev)
-              TAG="dev"
+              TAG="Dev"
               ;;
             *)
               echo "Unknown branch. Skipping image push."
