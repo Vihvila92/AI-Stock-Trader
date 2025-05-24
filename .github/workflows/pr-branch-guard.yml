@@ -17,7 +17,7 @@ jobs:
           echo "PR base branch: $BASE_REF"
           echo "PR head branch: $HEAD_REF"
 
-          if [[ "$BASE_REF" == "dev" && "$HEAD_REF" == feature/* ]]; then
+          if [[ "$BASE_REF" == "dev" && "$HEAD_REF" =~ ^feature/.* ]]; then
             echo "Valid: feature/* → dev"
             exit 0
           elif [[ "$BASE_REF" == "test" && "$HEAD_REF" == "dev" ]]; then
