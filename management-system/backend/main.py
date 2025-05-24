@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routes_users import router as users_router
+from routes_settings import router as settings_router
 from sqlalchemy.ext.asyncio import create_async_engine
 import os
 from models import Base, Setting
@@ -11,7 +12,7 @@ DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+asyncpg://postgres:postgres
 
 app = FastAPI()
 
-# Salli vain frontendin osoite (esim. http://localhost:3000)
+# Allow only the frontend origin (e.g. http://localhost:3000)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],
@@ -21,6 +22,7 @@ app.add_middleware(
 )
 
 app.include_router(users_router, prefix="/api")
+app.include_router(settings_router, prefix="/api")
 
 @app.get("/api/health")
 async def health():

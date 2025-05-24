@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import DashboardLayout from "./DashboardLayout";
 
 interface Props {
   onAdminCreated: () => void;
@@ -16,44 +15,43 @@ export default function AdminSetup({ onAdminCreated }: Props) {
     setLoading(true);
     setError('');
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
-      const res = await fetch(`${apiUrl}/api/users`, {
+      // Käytetään aina suhteellista polkua, jotta nginx-proxy toimii
+      const res = await fetch(`/api/users`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
       if (!res.ok) {
         const data = await res.json();
-        setError(data.detail || 'Virhe adminin luonnissa');
+        setError(data.detail || 'Error creating admin');
       } else {
-        onAdminCreated();
+        // Ohjataan kirjautumisruutuun adminin luonnin jälkeen
+        window.location.replace('/Login');
       }
     } catch (err) {
-      setError('Verkkovirhe');
+      setError('Network error');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <DashboardLayout>
       <main className="max-w-md mx-auto bg-white rounded shadow p-6 mt-8">
         <form onSubmit={handleSubmit} style={{ maxWidth: 320, margin: 'auto', padding: 32 }}>
-          <h2>Luo admin-käyttäjä</h2>
-          <div>
-            <label>Käyttäjätunnus</label>
-            <input value={username} disabled style={{ width: '100%' }} />
+          <h2 className="text-xl font-bold mb-4">Create Admin User</h2>
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-1">Username</label>
+            <input value={username} disabled className="w-full border border-gray-300 rounded px-3 py-2 bg-gray-100 text-gray-600" />
           </div>
-          <div style={{ marginTop: 12 }}>
-            <label>Salasana</label>
-            <input type="password" value={password} onChange={e => setPassword(e.target.value)} required style={{ width: '100%' }} />
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-1">Password</label>
+            <input type="password" value={password} onChange={e => setPassword(e.target.value)} required className="w-full border border-gray-300 rounded px-3 py-2" />
           </div>
           {error && <div style={{ color: 'red', marginTop: 12 }}>{error}</div>}
-          <button type="submit" disabled={loading || !password} style={{ marginTop: 16, width: '100%' }}>
-            {loading ? 'Luodaan...' : 'Luo admin'}
+          <button type="submit" disabled={loading || !password} className="w-full bg-blue-600 text-white rounded py-2 mt-2 font-semibold hover:bg-blue-700 transition-colors">
+            {loading ? 'Creating...' : 'Create Admin'}
           </button>
         </form>
       </main>
-    </DashboardLayout>
   );
 }

@@ -1,101 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import AdminSetup from './AdminSetup';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { getToken } from '../utils/auth';
 import Login from './Login';
-import DashboardLayout from './DashboardLayout';
-
-interface User {
-  id: number;
-  username: string;
-}
+import Dashboard from './dashboard';
 
 export default function Home() {
-  const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [session, setSession] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
-    setSession(!!localStorage.getItem('session'));
-    fetch('/api/users')
-      .then(async res => {
-        if (!res.ok) {
-          const text = await res.text();
-          setError(`API error: ${res.status} ${res.statusText} - ${text}`);
-          console.error('API error:', res.status, res.statusText, text);
-          setLoading(false);
-          return null;
-        }
-        return res.json();
-      })
-      .then(data => {
-        if (!data) return;
-        if (Array.isArray(data)) {
-          setUsers(data);
-        } else {
-          setUsers([]);
-          setError('API did not return an array: ' + JSON.stringify(data));
-          console.error('API did not return an array:', data);
-        }
-        setLoading(false);
-      })
-      .catch(err => {
-        setError('Network or fetch error: ' + err);
-        setLoading(false);
-        console.error('Fetch error:', err);
-      });
+    setIsAuthenticated(!!getToken());
   }, []);
 
-  if (loading) {
-    return <DashboardLayout>
-      <main style={{ padding: 32 }}>
-        <p>Loading...</p>
-        <pre style={{ color: '#888', fontSize: 12 }}>
-          NEXT_PUBLIC_API_URL: {process.env.NEXT_PUBLIC_API_URL || 'not set'}
-        </pre>
-      </main>
-    </DashboardLayout>;
+  if (!isAuthenticated) {
+    return <Login onLogin={() => router.replace('/dashboard')} />;
   }
 
-  if (error) {
-    return <DashboardLayout>
-      <main style={{ padding: 32, color: 'red' }}>
-        <h2>Virhe</h2>
-        <pre>{error}</pre>
-        <pre style={{ color: '#888', fontSize: 12 }}>
-          NEXT_PUBLIC_API_URL: {process.env.NEXT_PUBLIC_API_URL || 'not set'}
-        </pre>
-        <button onClick={() => window.location.reload()}>Yritä uudelleen</button>
-      </main>
-    </DashboardLayout>;
-  }
-
-  // Jos adminia ei ole, näytä adminin luonti
-  const adminExists = users.some(u => u.username === 'admin');
-  if (!adminExists) {
-    return <DashboardLayout>
-      <AdminSetup onAdminCreated={() => window.location.reload()} />
-    </DashboardLayout>;
-  }
-
-  // Jos ei sessiota, näytä kirjautuminen
-  if (!session) {
-    return <DashboardLayout>
-      <Login onLogin={() => setSession(true)} />
-    </DashboardLayout>;
-  }
-
-  // Jos sessio, näytä pääsivu
-  return (
-    <DashboardLayout>
-      <main style={{ padding: 32 }}>
-        <h1>Tervetuloa!</h1>
-        <p>Olet kirjautunut sisään.</p>
-        <ul>
-          {users.map(user => (
-            <li key={user.id}>{user.username}</li>
-          ))}
-        </ul>
-      </main>
-    </DashboardLayout>
-  );
+  return <Dashboard />;
 }
