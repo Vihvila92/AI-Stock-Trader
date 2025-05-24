@@ -2,15 +2,9 @@ name: Build and push Docker images
 
 on:
   push:
-    branches:
-      - main
-      - test
-      - dev
+    branches: [main, test, dev]
   pull_request:
-    branches:
-      - main
-      - test
-      - dev
+    branches: [main, test, dev]
 
 jobs:
   build-and-push:
@@ -29,8 +23,25 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # Oletetaan, että jokaisella kokonaisuudella on oma Dockerfile-kansio
-      # Toista tämä jokaiselle kokonaisuudelle (esim. management, agent, modules, jne.)
+      - name: Set Docker tag based on branch
+        id: set_tag
+        run: |
+          case "${GITHUB_REF_NAME}" in
+            main)
+              TAG="latest"
+              ;;
+            test)
+              TAG="test"
+              ;;
+            dev)
+              TAG="dev"
+              ;;
+            *)
+              echo "Unknown branch. Skipping image push."
+              exit 1
+              ;;
+          esac
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
 
       - name: Build and push management system image
         uses: docker/build-push-action@v5
@@ -38,4 +49,4 @@ jobs:
           context: ./management-system
           file: ./management-system/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ai-stock-trader-management:${{ github.ref_name }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ai-stock-trader-management:${{ steps.set_tag.outputs.tag }}
