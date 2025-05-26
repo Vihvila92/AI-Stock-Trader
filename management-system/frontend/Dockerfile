@@ -1,5 +1,5 @@
 # Kehitystila (dev)
-FROM node:18-bullseye as dev
+FROM node:18-alpine as dev
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
@@ -10,10 +10,19 @@ CMD ["npm", "run", "dev"]
 # Tuotantotila (production)
 FROM node:18-alpine as production
 WORKDIR /app
+
+# Kopioi riippuvuudet ja asenna ne
 COPY package*.json ./
-RUN npm install --omit=dev
+RUN npm ci --only=production
+
+# Kopioi lähdekoodi ja buildaa
 COPY . .
 RUN npm run build
-RUN cp -r .next/standalone/* ./ && cp -r .next/static ./
+
+# Poista kehitysriippuvuudet
+RUN npm prune --production
+
 EXPOSE 3000
-CMD ["node", "server.js"]
+
+# Käynnistä Next.js tuotannossa
+CMD ["npm", "start"]

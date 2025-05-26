@@ -14,6 +14,7 @@ AI Stock Trader is a modular, security-focused platform that combines advanced t
 - Real-time market data analysis
 - Automated trading capabilities
 - Scalable infrastructure
+- Containerized microservices with automated CI/CD
 
 ## System Architecture
 
@@ -49,10 +50,10 @@ AI Stock Trader is a modular, security-focused platform that combines advanced t
 
 ### Prerequisites
 
-- Docker
+- Docker & Docker Compose
 - Git
 
-### Installation
+### Quick Start
 
 1. Clone the repository:
 
@@ -61,19 +62,91 @@ git clone https://github.com/yourusername/AI-Stock-Trader.git
 cd AI-Stock-Trader
 ```
 
-1. Start the development environment:
+1. Start the management system:
 
 ```bash
+cd management-system
 docker-compose up -d
 ```
 
+1. Access the services:
+
+- **Web Interface**: <http://localhost:80> (via nginx proxy)
+- **Frontend**: <http://localhost:3000> (Next.js)
+- **Backend API**: <http://localhost:8000> (FastAPI)
+- **Database**: localhost:5432 (PostgreSQL)
+
+### Docker Architecture
+
+The system uses a microservices architecture with automated Docker image builds:
+
+#### Management System Components
+
+- **Backend**: `kozzyvizzy/ai-stock-trader-backend`
+- **Frontend**: `kozzyvizzy/ai-stock-trader-frontend`
+- **Proxy**: `nginx:1.25-alpine` (official image + custom config)
+- **Database**: `postgres:16` (official image)
+
+#### Environment-specific Deployments
+
+```bash
+# Development (uses docker-compose.override.yml)
+docker-compose up -d
+
+# Testing environment
+export TAG=test
+docker-compose up -d
+
+# Production
+docker-compose -f docker-compose.prod.yml up -d
+```
+
+### Docker Images & CI/CD
+
+GitHub Actions automatically builds and pushes Docker images to Docker Hub:
+
+**Branches → Tags:**
+
+- `main` → `latest`
+- `dev` → `dev`
+- `test` → `test`
+
+**Available Images:**
+
+- `kozzyvizzy/ai-stock-trader-backend:latest|dev|test`
+- `kozzyvizzy/ai-stock-trader-frontend:latest|dev|test`
+
 ### Development
 
-The project uses a simple branch strategy:
+The project uses a containerized development workflow with automated Docker builds:
+
+#### Branch Strategy
 
 - `main`: Production releases
-- `test`: Testing and validation
+- `test`: Testing and validation  
 - `dev`: Active development
+
+#### Local Development
+
+```bash
+# Start development environment (uses override config)
+cd management-system
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop services
+docker-compose down
+```
+
+#### Production Deployment
+
+```bash
+# Deploy with production images from Docker Hub
+cd management-system
+docker-compose -f docker-compose.prod.yml up -d
+```
 
 ## Documentation
 
@@ -121,8 +194,8 @@ file for full disclaimer and terms.
 
 ## Contact
 
-- GitHub: [@Vihvila92](https://github.com/Vihvila92)
-- Security Issues: Please create a new issue on [GitHub Issues](https://github.com/Vihvila92/AI-Stock-Trader/issues) with the `security` label
+- GitHub: [@Vihvila92](<https://github.com/Vihvila92>)
+- Security Issues: Please create a new issue on [GitHub Issues](<https://github.com/Vihvila92/AI-Stock-Trader/issues>) with the `security` label
 
 ## Acknowledgments
 

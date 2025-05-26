@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   backend:
-    build: ./backend
+    image: ${DOCKERHUB_USERNAME:-kozzyvizzy}/ai-stock-trader-backend:${TAG:-latest}
     ports:
       - "8000:8000"
     environment:
@@ -24,16 +24,13 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   frontend:
-    build:
-      context: ./frontend
-      target: production
+    image: ${DOCKERHUB_USERNAME:-kozzyvizzy}/ai-stock-trader-frontend:${TAG:-latest}
     ports:
       - "3000:3000"
     depends_on:
       - backend
     environment:
       - NEXT_PUBLIC_API_URL=http://backend:8000
-    # Ei volumea eikä komentoa oletuksena
 
   proxy:
     image: nginx:1.25-alpine
