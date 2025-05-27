@@ -1,0 +1,240 @@
+{
+  "folders": [
+    {
+      "name": "AI Stock Trader",
+      "path": "."
+    },
+    {
+      "name": "Frontend",
+      "path": "./management-system/frontend"
+    },
+    {
+      "name": "Backend",
+      "path": "./management-system/backend"
+    }
+  ],
+  "settings": {
+    // General editor settings
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit",
+      "source.organizeImports": "explicit"
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.rulers": [80, 100],
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+
+    // Language specific settings
+    "[typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.tabSize": 2
+    },
+    "[typescriptreact]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.tabSize": 2
+    },
+    "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.tabSize": 2
+    },
+    "[json]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.tabSize": 2
+    },
+    "[python]": {
+      "editor.defaultFormatter": "ms-python.black-formatter",
+      "editor.tabSize": 4,
+      "editor.formatOnSave": true
+    },
+    "[yaml]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.tabSize": 2
+    },
+    "[markdown]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.wordWrap": "on"
+    },
+
+    // Python specific settings
+    "python.defaultInterpreterPath": "./management-system/backend/.venv/bin/python",
+    "python.linting.enabled": true,
+    "python.linting.flake8Enabled": true,
+    "python.linting.mypyEnabled": true,
+    "python.linting.banditEnabled": true,
+    "python.linting.pylintEnabled": false,
+    "python.formatting.provider": "black",
+    "python.sortImports.args": ["--profile", "black"],
+    "python.testing.pytestEnabled": true,
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestArgs": ["management-system/backend"],
+
+    // ESLint settings
+    "eslint.workingDirectories": ["management-system/frontend"],
+    "eslint.validate": [
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescriptreact"
+    ],
+
+    // Prettier settings
+    "prettier.configPath": "./management-system/frontend/prettier.config.js",
+
+    // File associations
+    "files.associations": {
+      "*.env*": "properties",
+      "Dockerfile*": "dockerfile",
+      "docker-compose*.yml": "yaml"
+    },
+
+    // Search settings
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/bower_components": true,
+      "**/*.code-search": true,
+      "**/.next": true,
+      "**/coverage": true,
+      "**/.pytest_cache": true,
+      "**/__pycache__": true,
+      "**/htmlcov": true,
+      "**/.mypy_cache": true
+    },
+
+    // Git settings
+    "git.ignoreLimitWarning": true,
+    "git.autofetch": true,
+
+    // Terminal settings
+    "terminal.integrated.defaultProfile.osx": "zsh",
+    "terminal.integrated.cwd": "${workspaceFolder}",
+
+    // Docker settings
+    "docker.defaultRegistryPath": "",
+
+    // Extensions recommendations
+    "extensions.recommendations": [
+      "ms-python.python",
+      "ms-python.flake8",
+      "ms-python.black-formatter",
+      "ms-python.mypy-type-checker",
+      "esbenp.prettier-vscode",
+      "dbaeumer.vscode-eslint",
+      "bradlc.vscode-tailwindcss",
+      "ms-vscode.vscode-typescript-next",
+      "ms-azuretools.vscode-docker",
+      "github.copilot",
+      "github.copilot-chat",
+      "ms-vscode.test-adapter-converter",
+      "hbenl.vscode-test-explorer"
+    ]
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Debug Next.js Frontend",
+        "type": "node",
+        "request": "launch",
+        "program": "${workspaceFolder}/management-system/frontend/node_modules/.bin/next",
+        "args": ["dev"],
+        "cwd": "${workspaceFolder}/management-system/frontend",
+        "env": {
+          "NODE_OPTIONS": "--inspect"
+        }
+      },
+      {
+        "name": "Debug Python Backend",
+        "type": "python",
+        "request": "launch",
+        "program": "${workspaceFolder}/management-system/backend/main.py",
+        "cwd": "${workspaceFolder}/management-system/backend",
+        "env": {
+          "PYTHONPATH": "${workspaceFolder}/management-system/backend"
+        },
+        "console": "integratedTerminal"
+      }
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Install Frontend Dependencies",
+        "type": "shell",
+        "command": "npm install",
+        "options": {
+          "cwd": "${workspaceFolder}/management-system/frontend"
+        },
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        }
+      },
+      {
+        "label": "Install Backend Dependencies",
+        "type": "shell",
+        "command": "pip install -r requirements.txt -r requirements-dev.txt",
+        "options": {
+          "cwd": "${workspaceFolder}/management-system/backend"
+        },
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        }
+      },
+      {
+        "label": "Setup Pre-commit Hooks",
+        "type": "shell",
+        "command": "pre-commit install",
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        }
+      },
+      {
+        "label": "Run Frontend Tests",
+        "type": "shell",
+        "command": "npm test",
+        "options": {
+          "cwd": "${workspaceFolder}/management-system/frontend"
+        },
+        "group": "test",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        }
+      },
+      {
+        "label": "Run Backend Tests",
+        "type": "shell",
+        "command": "pytest",
+        "options": {
+          "cwd": "${workspaceFolder}/management-system/backend"
+        },
+        "group": "test",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        }
+      }
+    ]
+  }
+}

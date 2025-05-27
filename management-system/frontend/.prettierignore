@@ -1,0 +1,15 @@
+# Ignore generated files and directories
+.next/
+node_modules/
+coverage/
+dist/
+build/
+
+# Ignore cache files
+*.log
+*.cache
+*.tsbuildinfo
+
+# Ignore lock files
+package-lock.json
+yarn.lock

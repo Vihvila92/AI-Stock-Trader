@@ -6,7 +6,7 @@ updates:
     schedule:
       interval: "weekly"
       day: "monday"
-    target-branch: "dev"
+    target-branch: "Dev"
     labels:
       - "dependencies"
       - "frontend"
@@ -19,8 +19,8 @@ updates:
     directory: "/management-system/backend"
     schedule:
       interval: "weekly"
-      day: "monday"
-    target-branch: "dev"
+      day: "tuesday"
+    target-branch: "Dev"
     labels:
       - "dependencies"
       - "backend"
@@ -28,27 +28,13 @@ updates:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
 
-  # Agent dependencies
-  - package-ecosystem: "pip"
-    directory: "/agent"
-    schedule:
-      interval: "weekly"
-      day: "monday"
-    target-branch: "dev"
-    labels:
-      - "dependencies"
-      - "agent"
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major"]
-
-  # Docker dependencies
+  # Docker dependencies (Dockerfiles and base images)
   - package-ecosystem: "docker"
-    directory: "/"
+    directory: "/management-system"
     schedule:
       interval: "weekly"
-      day: "monday"
-    target-branch: "dev"
+      day: "wednesday"
+    target-branch: "Dev"
     labels:
       - "dependencies"
       - "docker"
@@ -61,8 +47,11 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-      day: "monday"
-    target-branch: "dev"
+      day: "thursday"
+    target-branch: "Dev"
     labels:
       - "dependencies"
       - "ci"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]

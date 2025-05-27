@@ -15,23 +15,23 @@ export default function Dashboard() {
         setChecking(false);
         return;
       }
-      const res = await fetch('/api/users/me', { headers: token });
+      const res = await fetch("/api/users/me", { headers: token });
       if (res.ok) {
         const data = await res.json();
         setCurrentUser(data);
         setChecking(false);
       } else if (res.status === 401) {
         // Ei kirjautunut, tarkista onko käyttäjiä olemassa
-        const usersRes = await fetch('/api/users');
+        const usersRes = await fetch("/api/users");
         if (usersRes.ok) {
           const users = await usersRes.json();
           if (Array.isArray(users) && users.length === 0) {
-            router.replace('/AdminSetup');
+            router.replace("/AdminSetup");
           } else {
-            router.replace('/Login');
+            router.replace("/Login");
           }
         } else {
-          router.replace('/Login');
+          router.replace("/Login");
         }
       } else {
         setChecking(false);

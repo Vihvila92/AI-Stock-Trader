@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 export type AppearanceSettings = {
   login_background_color?: string;
@@ -6,7 +6,7 @@ export type AppearanceSettings = {
   login_text_color?: string;
   logo_url?: string;
   site_name?: string;
-  theme?: 'light' | 'dark' | 'system'; // theme voi olla myös 'system'
+  theme?: "light" | "dark" | "system"; // theme voi olla myös 'system'
   [key: string]: any;
 };
 
@@ -26,46 +26,52 @@ export const useAppearance = () => useContext(AppearanceContext);
 export function getAppearanceValue(
   appearance: AppearanceSettings,
   key: string,
-  fallback?: string
+  fallback?: string,
 ): string {
   // theme: 'light', 'dark' tai 'system'
-  let theme = appearance.theme || 'light';
-  if (theme === 'system') {
-    if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      theme = 'dark';
+  let theme = appearance.theme || "light";
+  if (theme === "system") {
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
+      theme = "dark";
     } else {
-      theme = 'light';
+      theme = "light";
     }
   }
-  if (theme === 'dark' && appearance[`${key}_dark`]) {
+  if (theme === "dark" && appearance[`${key}_dark`]) {
     return appearance[`${key}_dark`];
   }
-  if (theme === 'light' && appearance[`${key}_light`]) {
+  if (theme === "light" && appearance[`${key}_light`]) {
     return appearance[`${key}_light`];
   }
   if (appearance[key]) return appearance[key];
-  return fallback || '';
+  return fallback || "";
 }
 
-export const AppearanceProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const AppearanceProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [appearance, setAppearance] = useState<AppearanceSettings>({});
   const [loading, setLoading] = useState(true);
-  const [systemTheme, setSystemTheme] = useState<'light' | 'dark'>('light');
+  const [systemTheme, setSystemTheme] = useState<"light" | "dark">("light");
 
   const fetchAppearance = async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/settings?category=appearance');
+      const res = await fetch("/api/settings?category=appearance");
       const data = await res.json();
       // data: [{ key, value, ... }]
       const obj: AppearanceSettings = {};
       for (const s of data) {
         // Jos value on objekti (esim. { value: "#fff" }), käytä valuea
         let v = s.value;
-        if (typeof v === 'string') {
+        if (typeof v === "string") {
           try {
             const parsed = JSON.parse(v);
-            if (parsed && typeof parsed === 'object' && 'value' in parsed) {
+            if (parsed && typeof parsed === "object" && "value" in parsed) {
               v = parsed.value;
             }
           } catch {}
@@ -85,28 +91,30 @@ export const AppearanceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
   // Listen system theme if needed
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const mq = window.matchMedia('(prefers-color-scheme: dark)');
-    const handler = () => setSystemTheme(mq.matches ? 'dark' : 'light');
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    const handler = () => setSystemTheme(mq.matches ? "dark" : "light");
     handler();
-    mq.addEventListener('change', handler);
-    return () => mq.removeEventListener('change', handler);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
   }, []);
 
   // Theme tulee kannasta, mutta voidaan asettaa <html> classiin dynaamisesti
   useEffect(() => {
     // theme: 'light', 'dark' tai 'system'
-    let theme = appearance.theme || 'light';
-    if (theme === 'system') theme = systemTheme;
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
+    let theme = appearance.theme || "light";
+    if (theme === "system") theme = systemTheme;
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
     } else {
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.remove("dark");
     }
   }, [appearance.theme, systemTheme]);
 
   return (
-    <AppearanceContext.Provider value={{ appearance, loading, refresh: fetchAppearance }}>
+    <AppearanceContext.Provider
+      value={{ appearance, loading, refresh: fetchAppearance }}
+    >
       {children}
     </AppearanceContext.Provider>
   );

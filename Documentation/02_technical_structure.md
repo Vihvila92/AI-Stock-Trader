@@ -49,12 +49,14 @@
 ### Security Model
 
 - Encrypted Communication:
+
   - Individual agent-specific encryption keys
   - Daily key rotation
   - Separate keys for each communication channel
   - Zero trust architecture
 
 - Access Control:
+
   - Static permissions limited to:
     - Status updates
     - Role verification

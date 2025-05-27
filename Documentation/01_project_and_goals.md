@@ -49,14 +49,17 @@ AI Stock Trader is an innovative project that combines artificial intelligence w
 ### Core Components
 
 1. **Management System (High-Security Module)**
+
    - Isolated, high-security control center
    - Core Components:
+
      - Nginx reverse proxy for secure access
      - Protected frontend interface
      - Secured backend with dedicated REST API
      - Isolated management database
 
    - Security Architecture:
+
      - Zero-trust security model
      - Dynamic permission system
      - Per-agent encryption keys
@@ -77,6 +80,7 @@ AI Stock Trader is an innovative project that combines artificial intelligence w
      - Independent security domains
 
 2. **Data Architecture**
+
    - Segregated databases:
      - Management database (isolated)
      - Processing databases (separate)
@@ -84,6 +88,7 @@ AI Stock Trader is an innovative project that combines artificial intelligence w
    - REST API processing layer
 
 3. **Node Agent**
+
    - Installed on processing nodes (e.g., Ubuntu VMs)
    - Acts as intermediary between Management System and Processing Modules
    - Controls module deployment and execution

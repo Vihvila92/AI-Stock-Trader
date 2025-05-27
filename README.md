@@ -123,7 +123,7 @@ The project uses a containerized development workflow with automated Docker buil
 #### Branch Strategy
 
 - `main`: Production releases
-- `test`: Testing and validation  
+- `test`: Testing and validation
 - `dev`: Active development
 
 #### Local Development
@@ -188,14 +188,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### Trading Disclaimer
 
-This software is an experimental project intended for educational and research purposes only.  
-It is not meant for actual trading or financial decision-making. See the [LICENSE](LICENSE)  
+This software is an experimental project intended for educational and research purposes only.
+It is not meant for actual trading or financial decision-making. See the [LICENSE](LICENSE)
 file for full disclaimer and terms.
 
 ## Contact
 
-- GitHub: [@Vihvila92](<https://github.com/Vihvila92>)
-- Security Issues: Please create a new issue on [GitHub Issues](<https://github.com/Vihvila92/AI-Stock-Trader/issues>) with the `security` label
+- GitHub: [@Vihvila92](https://github.com/Vihvila92)
+- Security Issues: Please create a new issue on [GitHub Issues](https://github.com/Vihvila92/AI-Stock-Trader/issues) with the `security` label
 
 ## Acknowledgments
 

@@ -5,6 +5,7 @@
 ### Local Development
 
 1. Container-Based Environment
+
    - Docker Compose configuration
    - Local database instances
    - Mock agent services
@@ -21,11 +22,13 @@
 ### Development Setup Requirements
 
 1. Basic Requirements
+
    - Git repository clone
    - Docker installation
    - Docker Compose
 
 2. Environment Configuration
+
    - All components containerized
    - Local development through Docker
    - No additional dependencies needed
@@ -38,6 +41,7 @@
 ### Disaster Recovery
 
 1. Current Strategy
+
    - Agents maintain operation during management system outage
    - Task completion state preservation
    - Automatic reconnection and state sync
@@ -54,6 +58,7 @@
 ### Unit Testing
 
 1. Component Tests
+
    - Management System modules
    - Agent communication
    - Security protocols
@@ -70,6 +75,7 @@
 ### Integration Testing
 
 1. System Components
+
    - Agent-Management communication
    - Module deployment process
    - Database interactions
@@ -86,6 +92,7 @@
 ### End-to-End Testing
 
 1. Complete Workflows
+
    - Node registration process
    - Module deployment lifecycle
    - Data collection pipelines
@@ -104,6 +111,7 @@
 ### Code Standards
 
 1. Security Practices
+
    - Key handling procedures
    - Secure communication patterns
    - Permission management
@@ -120,6 +128,7 @@
 ### Version Control
 
 1. Branch Strategy
+
    - main: Stable production code
    - test: Pre-production testing and validation
    - dev: Current development work
@@ -130,6 +139,7 @@
      - Basic deployment validated
 
 2. GitHub Integration
+
    - Issue tracking for feature requests and bugs
    - Project boards for development planning
    - Pull requests for code review
@@ -150,6 +160,7 @@
 ### Automated Testing
 
 1. Test Suites
+
    - Unit test automation
    - Integration test flows
    - Security test scenarios
@@ -166,6 +177,7 @@
 ### Deployment Process
 
 1. Staging Environment
+
    - Full system deployment
    - Security protocol verification
    - Performance validation
@@ -184,6 +196,7 @@
 ### Code Documentation
 
 1. Security Documentation
+
    - Key management procedures
    - Permission systems
    - Security protocols
@@ -200,6 +213,7 @@
 ### System Documentation
 
 1. Architecture Documentation
+
    - Component interactions
    - Security measures
    - Data flows
@@ -218,6 +232,7 @@
 ### Code Quality
 
 1. Automated Checks
+
    - Linting rules
    - Type checking
    - Security patterns
@@ -234,6 +249,7 @@
 ### Security Validation
 
 1. Regular Audits
+
    - Security protocol review
    - Permission system audit
    - Key management audit

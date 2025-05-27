@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { getToken } from '../utils/auth';
-import Login from './Login';
-import Dashboard from './dashboard';
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { getToken } from "../utils/auth";
+import Login from "./Login";
+import Dashboard from "./dashboard";
 
 export default function Home() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -13,7 +13,7 @@ export default function Home() {
   }, []);
 
   if (!isAuthenticated) {
-    return <Login onLogin={() => router.replace('/dashboard')} />;
+    return <Login onLogin={() => router.replace("/dashboard")} />;
   }
 
   return <Dashboard />;

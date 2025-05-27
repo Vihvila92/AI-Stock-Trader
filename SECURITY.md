@@ -7,6 +7,7 @@ The AI Stock Trader implements a zero-trust security model with multiple layers 
 ### Core Security Features
 
 1. Agent-Management System Communication
+
    - Individual per-agent encryption keys
    - Daily key rotation policy
    - Minimal static permissions
@@ -15,6 +16,7 @@ The AI Stock Trader implements a zero-trust security model with multiple layers 
    - Anomaly detection and response
 
 2. Access Control System
+
    - Just-in-time access granting
    - Task-specific permissions
    - Automatic permission expiration
@@ -98,4 +100,5 @@ This project is under active development and security features are being impleme
 [Add your security contact information]
 
 ---
+
 Last updated: [Current Date]

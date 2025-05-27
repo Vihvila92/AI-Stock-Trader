@@ -21,15 +21,15 @@ jobs:
           HEAD_REF_LC="${HEAD_REF,,}"
 
           if [[ "$BASE_REF_LC" == "dev" && "$HEAD_REF_LC" =~ ^feature/.* ]]; then
-            echo "Valid: feature/* → dev"
+            echo "Valid: feature/* → Dev"
             exit 0
           elif [[ "$BASE_REF_LC" == "test" && "$HEAD_REF_LC" == "dev" ]]; then
-            echo "Valid: dev → test"
+            echo "Valid: Dev → Test"
             exit 0
           elif [[ "$BASE_REF_LC" == "main" && "$HEAD_REF_LC" == "test" ]]; then
-            echo "Valid: test → main"
+            echo "Valid: Test → main"
             exit 0
           else
-            echo "::error ::PR branch direction is not allowed. Only feature/* → dev, dev → test, or test → main PRs are permitted."
+            echo "::error ::PR branch direction is not allowed. Only feature/* → Dev, Dev → Test, or Test → main PRs are permitted."
             exit 1
           fi

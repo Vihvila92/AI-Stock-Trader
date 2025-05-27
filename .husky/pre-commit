@@ -1,0 +1,5 @@
+# Run pre-commit hooks
+cd management-system/backend && pre-commit run --all-files
+
+# Run lint-staged for frontend
+cd ../frontend && npx lint-staged
