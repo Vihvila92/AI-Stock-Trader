@@ -9,10 +9,10 @@ import { AppearanceProvider } from "../utils/AppearanceContext";
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   useEffect(() => {
-    // Älä redirectaa jos ollaan jo Login- tai AdminSetup-sivulla
+    // Don't redirect if already on Login or AdminSetup page
     const publicRoutes = ["/Login", "/AdminSetup"];
     if (!getToken() && !publicRoutes.includes(router.pathname)) {
-      // Tarkista onko käyttäjiä olemassa
+      // Check if users exist
       fetch("/api/users")
         .then((res) => (res.ok ? res.json() : []))
         .then((users) => {
@@ -24,7 +24,7 @@ export default function App({ Component, pageProps }: AppProps) {
         })
         .catch(() => router.replace("/Login"));
     }
-  }, [router.pathname]);
+  }, [router]);
   return (
     <AppearanceProvider>
       <Component {...pageProps} />

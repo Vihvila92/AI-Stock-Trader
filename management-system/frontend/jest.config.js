@@ -55,6 +55,7 @@ const customJestConfig = {
     "^.+\\.module\\.(css|sass|scss)$",
   ],
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
+  passWithNoTests: true,
 };
 
 module.exports = createJestConfig(customJestConfig);

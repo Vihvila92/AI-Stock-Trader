@@ -22,27 +22,27 @@ repos:
     hooks:
       - id: black
         language_version: python3
-        files: ^management-system/backend/.*\.py$
+        files: ^(management-system/backend|node-agent|node-plugins)/.*\.py$
 
   - repo: https://github.com/pycqa/flake8
     rev: 7.2.0
     hooks:
       - id: flake8
-        files: ^management-system/backend/.*\.py$
+        files: ^(management-system/backend|node-agent|node-plugins)/.*\.py$
         args: ["--max-line-length=88", "--extend-ignore=E203,W503"]
 
   - repo: https://github.com/pycqa/isort
     rev: 6.0.1
     hooks:
       - id: isort
-        files: ^management-system/backend/.*\.py$
+        files: ^(management-system/backend|node-agent|node-plugins)/.*\.py$
         args: [--profile=black]
 
   - repo: https://github.com/pycqa/bandit
     rev: 1.8.3
     hooks:
       - id: bandit
-        files: ^management-system/backend/.*\.py$
+        files: ^(management-system/backend|node-agent|node-plugins)/.*\.py$
         args: [-r, --skip, B101]
 
   # General hooks

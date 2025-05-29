@@ -65,21 +65,21 @@ function UserModal({
     permissions,
   };
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
-      <div className="bg-white rounded shadow-lg p-6 min-w-[320px] relative">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
+      <div className="relative min-w-[320px] rounded bg-white p-6 shadow-lg">
         <button
-          className="absolute top-2 right-2 text-gray-500"
+          className="absolute right-2 top-2 text-gray-500"
           onClick={onClose}
         >
           ✕
         </button>
-        <h2 className="text-lg font-bold mb-2">
+        <h2 className="mb-2 text-lg font-bold">
           {isNew ? "Add User" : "Edit User"}
         </h2>
         <div className="mb-2">
           <label className="block text-sm">Username</label>
           <input
-            className="border px-2 py-1 w-full"
+            className="w-full border px-2 py-1"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             disabled={user?.username === "admin" || !isNew}
@@ -92,7 +92,7 @@ function UserModal({
           <div className="mb-2">
             <label className="block text-sm">Password</label>
             <input
-              className="border px-2 py-1 w-full"
+              className="w-full border px-2 py-1"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -107,7 +107,7 @@ function UserModal({
               <>
                 <label className="block text-sm">Current Password</label>
                 <input
-                  className="border px-2 py-1 w-full mb-2"
+                  className="mb-2 w-full border px-2 py-1"
                   type="password"
                   value={oldPassword}
                   onChange={(e) => setOldPassword(e.target.value)}
@@ -117,7 +117,7 @@ function UserModal({
             )}
             <label className="block text-sm">New Password</label>
             <input
-              className="border px-2 py-1 w-full"
+              className="w-full border px-2 py-1"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -131,7 +131,7 @@ function UserModal({
         )}
         {(user?.username !== "admin" || isNew) && (
           <div className="mb-2">
-            <div className="text-sm mb-1">Permissions</div>
+            <div className="mb-1 text-sm">Permissions</div>
             <div className="flex gap-4">
               {PERMISSIONS.map((p) => (
                 <label key={p.key} className="flex items-center gap-1">
@@ -152,9 +152,9 @@ function UserModal({
             </div>
           </div>
         )}
-        <div className="flex gap-2 mt-2">
+        <div className="mt-2 flex gap-2">
           <button
-            className="bg-blue-600 text-white px-4 py-1 rounded"
+            className="rounded bg-blue-600 px-4 py-1 text-white"
             onClick={() =>
               onSave({
                 ...modalUser,
@@ -171,7 +171,7 @@ function UserModal({
             user?.id !== undefined &&
             user?.username !== "admin" && (
               <button
-                className="bg-red-600 text-white px-4 py-1 rounded"
+                className="rounded bg-red-600 px-4 py-1 text-white"
                 onClick={() => {
                   if (window.confirm("Delete user?")) onDelete(user.id);
                 }}
@@ -320,10 +320,10 @@ export default function UsersPage() {
 
   return (
     <DashboardLayout>
-      <div className="max-w-xl mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-4">User Management</h1>
+      <div className="mx-auto max-w-xl p-4">
+        <h1 className="mb-4 text-2xl font-bold">User Management</h1>
         <button
-          className="bg-blue-600 text-white px-4 py-1 rounded mb-4"
+          className="mb-4 rounded bg-blue-600 px-4 py-1 text-white"
           onClick={() => {
             setModalUser({ id: 0, username: "", permissions: {} });
             setModalOpen(true);
@@ -332,7 +332,7 @@ export default function UsersPage() {
         >
           Add User
         </button>
-        {error && <div className="text-red-600 mb-2">{error}</div>}
+        {error && <div className="mb-2 text-red-600">{error}</div>}
         {loading ? (
           <div>Loading users...</div>
         ) : (
@@ -340,7 +340,7 @@ export default function UsersPage() {
             {users.map((user) => (
               <li
                 key={user.id}
-                className="py-2 border-b cursor-pointer hover:bg-gray-50"
+                className="cursor-pointer border-b py-2 hover:bg-gray-50"
                 onClick={() => {
                   setModalUser(user);
                   setModalOpen(true);

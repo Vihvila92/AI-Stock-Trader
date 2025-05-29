@@ -28,7 +28,7 @@ export default function DashboardLayout({
   const closeTimeout = useRef<NodeJS.Timeout | null>(null);
   const { appearance, loading: appearanceLoading } = useAppearance();
 
-  // Kaikki ulkoasuasetukset kannasta ja theme huomioiden
+  // All appearance settings from database with theme consideration
   const logoUrl = getAppearanceValue(appearance, "logo_url");
   const isValidLogo =
     typeof logoUrl === "string" &&
@@ -103,16 +103,16 @@ export default function DashboardLayout({
     <div className={`min-h-screen ${pageBg}`}>
       {/* Main navigation bar */}
       <nav
-        className={`${navBg} ${navText} px-6 py-4 flex items-center justify-between`}
+        className={`${navBg} ${navText} flex items-center justify-between px-6 py-4`}
       >
         <div className="flex items-center gap-2">
           {isValidLogo ? (
             <img src={logoUrl} alt="Logo" className="h-8 w-8 object-contain" />
           ) : (
-            <span className="font-bold text-xl">{siteName}</span>
+            <span className="text-xl font-bold">{siteName}</span>
           )}
         </div>
-        <div className="space-x-4 flex items-center">
+        <div className="flex items-center space-x-4">
           {NAV_LINKS.map((link) => (
             <Link key={link.href} href={link.href} className="hover:underline">
               {link.label}
@@ -128,7 +128,7 @@ export default function DashboardLayout({
                 Admin
               </button>
               {adminMenuOpen && (
-                <div className="absolute right-0 bg-white text-black mt-2 rounded shadow-lg min-w-[160px] z-50">
+                <div className="absolute right-0 z-50 mt-2 min-w-[160px] rounded bg-white text-black shadow-lg">
                   {adminMenuLinks.map((link) => (
                     <Link
                       key={link.href}
@@ -145,7 +145,7 @@ export default function DashboardLayout({
         </div>
       </nav>
       {/* Main content */}
-      <main className="max-w-4xl mx-auto py-8 px-4">{children}</main>
+      <main className="mx-auto max-w-4xl px-4 py-8">{children}</main>
     </div>
   );
 }

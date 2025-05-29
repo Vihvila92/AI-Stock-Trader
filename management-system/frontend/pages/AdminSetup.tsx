@@ -15,7 +15,7 @@ export default function AdminSetup({ onAdminCreated }: Props) {
     setLoading(true);
     setError("");
     try {
-      // Käytetään aina suhteellista polkua, jotta nginx-proxy toimii
+      // Always use relative path so nginx-proxy works
       const res = await fetch(`/api/users`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -25,7 +25,7 @@ export default function AdminSetup({ onAdminCreated }: Props) {
         const data = await res.json();
         setError(data.detail || "Error creating admin");
       } else {
-        // Ohjataan kirjautumisruutuun adminin luonnin jälkeen
+        // Redirect to login screen after admin creation
         window.location.replace("/Login");
       }
     } catch (err) {
@@ -36,35 +36,35 @@ export default function AdminSetup({ onAdminCreated }: Props) {
   };
 
   return (
-    <main className="max-w-md mx-auto bg-white rounded shadow p-6 mt-8">
+    <main className="mx-auto mt-8 max-w-md rounded bg-white p-6 shadow">
       <form
         onSubmit={handleSubmit}
         style={{ maxWidth: 320, margin: "auto", padding: 32 }}
       >
-        <h2 className="text-xl font-bold mb-4">Create Admin User</h2>
+        <h2 className="mb-4 text-xl font-bold">Create Admin User</h2>
         <div className="mb-4">
-          <label className="block text-sm font-medium mb-1">Username</label>
+          <label className="mb-1 block text-sm font-medium">Username</label>
           <input
             value={username}
             disabled
-            className="w-full border border-gray-300 rounded px-3 py-2 bg-gray-100 text-gray-600"
+            className="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-gray-600"
           />
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium mb-1">Password</label>
+          <label className="mb-1 block text-sm font-medium">Password</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full border border-gray-300 rounded px-3 py-2"
+            className="w-full rounded border border-gray-300 px-3 py-2"
           />
         </div>
         {error && <div style={{ color: "red", marginTop: 12 }}>{error}</div>}
         <button
           type="submit"
           disabled={loading || !password}
-          className="w-full bg-blue-600 text-white rounded py-2 mt-2 font-semibold hover:bg-blue-700 transition-colors"
+          className="mt-2 w-full rounded bg-blue-600 py-2 font-semibold text-white transition-colors hover:bg-blue-700"
         >
           {loading ? "Creating..." : "Create Admin"}
         </button>

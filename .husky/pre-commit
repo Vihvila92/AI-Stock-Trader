@@ -1,5 +1,5 @@
-# Run pre-commit hooks
-cd management-system/backend && pre-commit run --all-files
+# Run pre-commit hooks for all Python components
+pre-commit run --all-files
 
 # Run lint-staged for frontend
-cd ../frontend && npx lint-staged
+cd management-system/frontend && npx lint-staged

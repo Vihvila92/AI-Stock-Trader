@@ -21,7 +21,7 @@ export default function Dashboard() {
         setCurrentUser(data);
         setChecking(false);
       } else if (res.status === 401) {
-        // Ei kirjautunut, tarkista onko käyttäjiä olemassa
+        // Not logged in, check if users exist
         const usersRes = await fetch("/api/users");
         if (usersRes.ok) {
           const users = await usersRes.json();
@@ -54,8 +54,8 @@ export default function Dashboard() {
 
   return (
     <DashboardLayout>
-      <h2 className="text-2xl font-semibold mb-4">Dashboard</h2>
-      <div className="bg-white rounded-lg shadow p-6">
+      <h2 className="mb-4 text-2xl font-semibold">Dashboard</h2>
+      <div className="rounded-lg bg-white p-6 shadow">
         {/* This is the main dashboard page. */}
         <p>Welcome to the management system dashboard.</p>
       </div>

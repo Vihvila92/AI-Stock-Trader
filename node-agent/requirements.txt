@@ -1,0 +1,17 @@
+# Node-Agent Python Dependencies
+
+# Core dependencies
+asyncio-mqtt>=0.16.0
+aiohttp>=3.9.0
+websockets>=12.0
+psutil>=5.9.0
+
+# For secure communication
+cryptography>=41.0.0
+certifi>=2023.0.0
+
+# For system integration
+python-systemd>=235; sys_platform == "linux"
+
+# Utilities
+python-dotenv>=1.0.0

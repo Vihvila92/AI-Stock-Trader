@@ -58,7 +58,7 @@ AI Stock Trader is a modular, security-focused platform that combines advanced t
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/AI-Stock-Trader.git
+git clone https://github.com/Vihvila92/AI-Stock-Trader.git
 cd AI-Stock-Trader
 ```
 
@@ -170,13 +170,11 @@ The system implements multiple security layers:
 
 ## Current Status
 
-Project is in active development. Core components under construction:
+Project is in active development (v1.0.0). Core components under construction:
 
-- Management System
-- Agent System
-- Basic Processing Modules
-
-Version numbering will be implemented after core functionality is complete.
+- Management System ✅
+- Agent System (planned)
+- Basic Processing Modules (planned)
 
 ## Contributing
 

@@ -24,9 +24,9 @@ class Setting(Base):
     value = Column(String, nullable=False)
     labels = Column(
         String, nullable=True
-    )  # JSON: {"fi": "Sivuston nimi", "en": "Site name"}
-    category = Column(String, nullable=True)  # <-- LISÄÄ TÄMÄ
-    type = Column(String, nullable=True)  # <-- LISÄÄ TÄMÄ
-    enum = Column(Text, nullable=True)  # <-- LISÄÄ TÄMÄ
-    default_value = Column(String, nullable=True)  # <-- LISÄÄ TÄMÄ
-    is_editable = Column(Boolean, nullable=True)  # <-- LISÄÄ TÄMÄ
+    )  # JSON: {"fi": "Site name", "en": "Site name"}
+    category = Column(String, nullable=True)  # <-- ADD THIS
+    type = Column(String, nullable=True)  # <-- ADD THIS
+    enum = Column(Text, nullable=True)  # <-- ADD THIS
+    default_value = Column(String, nullable=True)  # <-- ADD THIS
+    is_editable = Column(Boolean, nullable=True)  # <-- ADD THIS

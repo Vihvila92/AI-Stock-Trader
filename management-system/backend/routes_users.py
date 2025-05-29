@@ -70,7 +70,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
                 )
             except Exception:
                 perms = {}
-        # Varmistetaan että adminilla on aina kaikki oikeudet
+        # Ensure that admin always has all permissions
         if getattr(user, "username", None) == "admin":
             perms.update(
                 {
@@ -156,7 +156,7 @@ async def get_users():
                     )
                 except Exception:
                     perms = {}
-            # Ei enää admin-poikkeusta, vaan luotetaan kannan permissionsiin
+            # No more admin exception, trust database permissions
             user_list.append({"id": u.id, "username": u.username, "permissions": perms})
         return user_list
 
@@ -170,7 +170,7 @@ async def get_me(user=Depends(get_current_user)):
 async def create_user(user: UserCreate, request: Request):
     client_ip = getattr(getattr(request, "client", None), "host", "unknown")
     async with AsyncSession(engine) as session:
-        # Estetään adminin luonti, jos käyttäjiä on jo olemassa
+        # Prevent admin creation if users already exist
         result = await session.execute(select(User))
         all_users = result.scalars().all()
         if user.username == "admin":
@@ -183,7 +183,7 @@ async def create_user(user: UserCreate, request: Request):
                     status_code=403,
                     detail="Admin can only be created as the first user",
                 )
-            # Kirjoitetaan adminille aina kaikki oikeudet
+            # Admin always gets all permissions
             permissions = {
                 "can_manage_users": True,
                 "can_edit_settings": True,
@@ -192,7 +192,7 @@ async def create_user(user: UserCreate, request: Request):
             }
             user.permissions = permissions
         else:
-            # Estetään muiden käyttäjien luonti, jos adminia ei ole olemassa
+            # Prevent other user creation if admin doesn't exist
             admin_exists = any(u.username == "admin" for u in all_users)
             if not admin_exists:
                 print(

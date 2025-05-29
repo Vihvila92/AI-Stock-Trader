@@ -1,37 +1,37 @@
-# AI Stock Trader - Kehitystyökalut
+# AI Stock Trader - Development Tools
 
-Tämä dokumentti kuvaa projektissa käytettävät kehitystyökalut ja niiden asetukset.
+This document describes the development tools and configurations used in the project.
 
-## 🛠️ Kehitysympäristön setup
+## 🛠️ Development Environment Setup
 
-### 1. Perusasennus
+### 1. Basic Installation
 
 ```bash
-# Kloonaa repositorio
+# Clone repository
 git clone <repository-url>
 cd AI-Stock-Trader
 
-# Asenna frontend riippuvuudet
+# Install frontend dependencies
 cd management-system/frontend
 npm install
 
-# Asenna backend riippuvuudet (virtuaaliympäristössä)
+# Install backend dependencies (in virtual environment)
 cd ../backend
 python -m venv .venv
 source .venv/bin/activate  # macOS/Linux
-# tai .venv\Scripts\activate  # Windows
+# or .venv\Scripts\activate  # Windows
 pip install -r requirements.txt -r requirements-dev.txt
 
-# Asenna pre-commit hooks
+# Install pre-commit hooks
 cd ../..
 pre-commit install
 ```
 
-### 2. VS Code setup
+### 2. VS Code Setup
 
-Avaa `AI-Stock-Trader.code-workspace` VS Codessa optimaalista kehityskokemusta varten.
+Open `AI-Stock-Trader.code-workspace` in VS Code for optimal development experience.
 
-Suositellut extensiot asentuvat automaattisesti:
+Recommended extensions will install automatically:
 
 - Python
 - ESLint
@@ -40,62 +40,62 @@ Suositellut extensiot asentuvat automaattisesti:
 - Docker
 - GitHub Copilot
 
-## 🧪 Testaus
+## 🧪 Testing
 
-### Frontend testit (Jest + Testing Library)
+### Frontend Tests (Jest + Testing Library)
 
 ```bash
 cd management-system/frontend
 
-# Aja testit
+# Run tests
 npm test
 
-# Aja testit watch-moodissa
+# Run tests in watch mode
 npm run test:watch
 
-# Aja testit coverage-reportilla
+# Run tests with coverage report
 npm run test:coverage
 ```
 
-### Backend testit (pytest)
+### Backend Tests (pytest)
 
 ```bash
 cd management-system/backend
 
-# Aja testit
+# Run tests
 pytest
 
-# Aja testit coverage-reportilla
+# Run tests with coverage report
 pytest --cov=. --cov-report=html
 
-# Aja vain tietyn tiedoston testit
+# Run specific file tests
 pytest tests/test_api.py
 
-# Aja testit markereiden mukaan
+# Run tests by markers
 pytest -m unit
 pytest -m integration
 ```
 
-## 🔍 Koodin laadunvarmistus
+## 🔍 Code Quality Assurance
 
 ### Frontend
 
 ```bash
 cd management-system/frontend
 
-# ESLint tarkistus
+# ESLint check
 npm run lint
 
-# ESLint korjaus
+# ESLint fix
 npm run lint:fix
 
-# Prettier formatointi
+# Prettier formatting
 npm run format
 
-# Prettier tarkistus
+# Prettier check
 npm run format:check
 
-# TypeScript tyyppitarkistus
+# TypeScript type check
 npm run type-check
 ```
 
@@ -104,128 +104,128 @@ npm run type-check
 ```bash
 cd management-system/backend
 
-# Black formatointi
+# Black formatting
 black .
 
-# Flake8 tarkistus
+# Flake8 check
 flake8 .
 
-# isort import järjestys
+# isort import order
 isort .
 
-# mypy tyyppitarkistus
+# mypy type check
 mypy .
 
-# Bandit security tarkistus
+# Bandit security check
 bandit -r .
 ```
 
-## 🔧 Pre-commit hooks
+## 🔧 Pre-commit Hooks
 
-Pre-commit hooks ajetaan automaattisesti ennen jokaista committia:
+Pre-commit hooks run automatically before each commit:
 
-- **Frontend**: ESLint, Prettier, TypeScript tarkistus
+- **Frontend**: ESLint, Prettier, TypeScript check
 - **Backend**: Black, Flake8, isort, Bandit, mypy
 - **Docker**: Hadolint
-- **Yleinen**: detect-secrets, trailing whitespace, file size
+- **General**: detect-secrets, trailing whitespace, file size
 
-Manuaalinen ajo:
+Manual execution:
 
 ```bash
-# Aja kaikki hooks
+# Run all hooks
 pre-commit run --all-files
 
-# Aja tietty hook
+# Run specific hook
 pre-commit run black --all-files
 ```
 
-## 📊 Coverage raportit
+## 📊 Coverage Reports
 
 ### Frontend
 
-Coverage raportti generoituu `coverage/` kansioon kun ajat `npm run test:coverage`.
+Coverage report is generated in `coverage/` folder when you run `npm run test:coverage`.
 
-### Backend
+### Backend (Coverage)
 
-Coverage raportti generoituu `htmlcov/` kansioon kun ajat pytest coverage-optioilla.
+Coverage report is generated in `htmlcov/` folder when you run pytest with coverage options.
 
-## 🎯 Coverage tavoitteet
+## 🎯 Coverage Targets
 
 - **Frontend**: 80% branch, function, line, statement coverage
 - **Backend**: 80% overall coverage
-- **Uudet tiedostot**: 90% coverage vaatimus
+- **New files**: 90% coverage requirement
 
-## 🚀 Development workflow
+## 🚀 Development Workflow
 
-1. **Luo uusi branch**: `git checkout -b feature/uusi-ominaisuus`
-2. **Kehitä**: Kirjoita koodi ja testit
-3. **Testaa**: `npm test` ja `pytest`
-4. **Tarkista laatu**: Pre-commit hooks ajetaan automaattisesti
-5. **Commit**: `git commit -m "feat: lisää uusi ominaisuus"`
-6. **Push**: `git push origin feature/uusi-ominaisuus`
-7. **Pull Request**: Luo PR GitHubissa
+1. **Create new branch**: `git checkout -b feature/new-feature`
+2. **Develop**: Write code and tests
+3. **Test**: `npm test` and `pytest`
+4. **Check quality**: Pre-commit hooks run automatically
+5. **Commit**: `git commit -m "feat: add new feature"`
+6. **Push**: `git push origin feature/new-feature`
+7. **Pull Request**: Create PR on GitHub
 
-## 🐳 Docker kehitys
+## 🐳 Docker Development
 
 ```bash
-# Käynnistä kehitysympäristö
+# Start development environment
 docker-compose up -d
 
-# Seuraa lokeja
+# Follow logs
 docker-compose logs -f
 
-# Pysäytä ympäristö
+# Stop environment
 docker-compose down
 ```
 
-## 🔧 Työkalujen konfiguraatiot
+## 🔧 Tool Configurations
 
-### Frontend konfiguraatiot
+### Frontend Configurations
 
-- `eslint.config.js` - ESLint säännöt
-- `prettier.config.js` - Prettier formatointi
-- `jest.config.js` - Jest testaus
+- `eslint.config.js` - ESLint rules
+- `prettier.config.js` - Prettier formatting
+- `jest.config.js` - Jest testing
 - `jest.setup.js` - Jest setup
 - `.lintstagedrc.json` - Lint-staged
 
-### Backend konfiguraatiot
+### Backend Configurations
 
-- `pytest.ini` - Pytest testaus
-- `mypy.ini` - mypy tyyppitarkistus
-- `pyproject.toml` - Black, isort (jos käytössä)
+- `pytest.ini` - Pytest testing
+- `mypy.ini` - mypy type checking
+- `pyproject.toml` - Black, isort (if used)
 
-### Projekti konfiguraatiot
+### Project Configurations
 
 - `.pre-commit-config.yaml` - Pre-commit hooks
 - `AI-Stock-Trader.code-workspace` - VS Code workspace
 
-## 🔍 Debuggaus
+## 🔍 Debugging
 
-### VS Code debugging
+### VS Code Debugging
 
-- **Frontend**: "Debug Next.js Frontend" konfiguraatio
-- **Backend**: "Debug Python Backend" konfiguraatio
+- **Frontend**: "Debug Next.js Frontend" configuration
+- **Backend**: "Debug Python Backend" configuration
 
-### Browser debugging
+### Browser Debugging
 
-- Frontend dev server: http://localhost:3000
-- Devtools käytettävissä
+- Frontend dev server: [http://localhost:3000](http://localhost:3000)
+- Devtools available
 
-## 📝 Lisätietoja
+## 📝 Additional Information
 
-- Katso projektin dokumentaatio `Documentation/` kansiosta
-- GitHub Actions CI/CD pipeline `.github/workflows/` kansiossa
-- Docker konfiguraatiot `docker-compose*.yml` tiedostoissa
+- See project documentation in `Documentation/` folder
+- GitHub Actions CI/CD pipeline in `.github/workflows/` folder
+- Docker configurations in `docker-compose*.yml` files
 
-## 🤝 Kontribuointi
+## 🤝 Contributing
 
-1. Fork repositorio
-2. Luo feature branch
-3. Noudata koodin laatustandardeja
-4. Kirjoita testit
-5. Varmista että kaikki testit menevät läpi
-6. Luo Pull Request
+1. Fork repository
+2. Create feature branch
+3. Follow code quality standards
+4. Write tests
+5. Ensure all tests pass
+6. Create Pull Request
 
 ---
 
-Kehitystyökalut on konfiguroitu takaamaan korkea koodin laatu ja yhtenäinen kehityskokemus kaikille projektin kehittäjille.
+Development tools are configured to ensure high code quality and consistent development experience for all project developers.

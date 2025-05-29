@@ -34,14 +34,14 @@ def upgrade():
         sa.text(
             """
         UPDATE settings SET category='appearance', type='enum',
-        enum='[{"value": "light", "label": {"en": "Light", "fi": "Vaalea"}},
-        {"value": "dark", "label": {"en": "Dark", "fi": "Tumma"}},
-        {"value": "system", "label": {"en": "System", "fi": "Järjestelmä"}}]'
+        enum='[{"value": "light", "label": {"en": "Light", "fi": "Light"}},
+        {"value": "dark", "label": {"en": "Dark", "fi": "Dark"}},
+        {"value": "system", "label": {"en": "System", "fi": "System"}}]'
         WHERE key='theme'
     """
         )
     )
-    # appearance-asetukset
+    # appearance settings
     for key in [
         "login_background_color",
         "login_background_color_dark",
@@ -61,7 +61,7 @@ def upgrade():
 
 
 def downgrade():
-    # Ei palauteta arvoja, vain tyhjennetään category/type/enum
+    # Don't restore values, just clear category/type/enum
     conn = op.get_bind()
     conn.execute(
         sa.text(

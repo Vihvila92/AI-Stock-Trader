@@ -6,7 +6,7 @@ export type AppearanceSettings = {
   login_text_color?: string;
   logo_url?: string;
   site_name?: string;
-  theme?: "light" | "dark" | "system"; // theme voi olla myös 'system'
+  theme?: "light" | "dark" | "system"; // theme can also be 'system'
   [key: string]: any;
 };
 
@@ -22,13 +22,13 @@ const AppearanceContext = createContext<{
 
 export const useAppearance = () => useContext(AppearanceContext);
 
-// Utility: Palauta oikea arvo (esim. väri) nykyisen teeman ja kannan mukaan
+// Utility: Return correct value (e.g. color) based on current theme and database
 export function getAppearanceValue(
   appearance: AppearanceSettings,
   key: string,
   fallback?: string,
 ): string {
-  // theme: 'light', 'dark' tai 'system'
+  // theme: 'light', 'dark' or 'system'
   let theme = appearance.theme || "light";
   if (theme === "system") {
     if (
@@ -66,7 +66,7 @@ export const AppearanceProvider: React.FC<{ children: React.ReactNode }> = ({
       // data: [{ key, value, ... }]
       const obj: AppearanceSettings = {};
       for (const s of data) {
-        // Jos value on objekti (esim. { value: "#fff" }), käytä valuea
+        // If value is an object (e.g. { value: "#fff" }), use the value
         let v = s.value;
         if (typeof v === "string") {
           try {
@@ -99,9 +99,9 @@ export const AppearanceProvider: React.FC<{ children: React.ReactNode }> = ({
     return () => mq.removeEventListener("change", handler);
   }, []);
 
-  // Theme tulee kannasta, mutta voidaan asettaa <html> classiin dynaamisesti
+  // Theme comes from database, but can be set to <html> class dynamically
   useEffect(() => {
-    // theme: 'light', 'dark' tai 'system'
+    // theme: 'light', 'dark' or 'system'
     let theme = appearance.theme || "light";
     if (theme === "system") theme = systemTheme;
     if (theme === "dark") {

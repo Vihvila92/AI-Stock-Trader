@@ -1,0 +1,34 @@
+[Unit]
+Description=Node Agent for AI Stock Trader
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=node-agent
+Group=node-agent
+ExecStart=/opt/node-agent/venv/bin/python /opt/node-agent/src/agent.py
+WorkingDirectory=/opt/node-agent
+Environment=NODE_AGENT_CONFIG=/etc/node-agent/config.json
+Environment=PATH=/opt/node-agent/venv/bin:/usr/local/bin:/usr/bin:/bin
+
+# Restart policy
+Restart=always
+RestartSec=30
+StartLimitInterval=350
+StartLimitBurst=10
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=node-agent
+
+# Security
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectHome=yes
+ProtectSystem=strict
+ReadWritePaths=/opt/node-agent /etc/node-agent /var/log/node-agent
+
+[Install]
+WantedBy=multi-user.target

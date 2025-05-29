@@ -35,7 +35,7 @@ export default function Login({ onLogin }: Props) {
   );
 
   useEffect(() => {
-    // Jos käyttäjiä ei ole, ohjataan adminin luontiin
+    // If no users exist, redirect to admin creation
     fetch("/api/users")
       .then((res) => (res.ok ? res.json() : []))
       .then((users) => {
@@ -78,7 +78,7 @@ export default function Login({ onLogin }: Props) {
       }
       const data = await res.json();
       setToken(data.access_token);
-      // Ohjataan suoraan dashboardiin kirjautumisen jälkeen
+      // Redirect directly to dashboard after login
       router.replace("/dashboard");
     } catch (err) {
       setError("Login error");
@@ -97,7 +97,7 @@ export default function Login({ onLogin }: Props) {
       }}
     >
       <main
-        className="max-w-md mx-auto rounded shadow p-6 mt-8"
+        className="mx-auto mt-8 max-w-md rounded p-6 shadow"
         style={{
           background: boxBg,
           color: textColor,

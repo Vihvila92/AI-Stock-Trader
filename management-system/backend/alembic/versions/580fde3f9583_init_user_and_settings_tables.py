@@ -22,7 +22,7 @@ def upgrade():
         sa.Column("id", sa.Integer(), nullable=False),
         sa.Column("key", sa.String(), nullable=False),
         sa.Column("value", sa.String(), nullable=False),
-        sa.Column("labels", sa.String(), nullable=True),  # monikielinen label
+        sa.Column("labels", sa.String(), nullable=True),  # multilingual label
         sa.PrimaryKeyConstraint("id"),
         sa.UniqueConstraint("key"),
     )
@@ -41,20 +41,20 @@ def upgrade():
     op.create_index(op.f("ix_users_username"), "users", ["username"], unique=True)
     # Insert default settings
     default_settings = [
-        # Yleiset asetukset
+        # General settings
         {
             "key": "site_name",
             "value": json.dumps(
                 {"value": "Management System", "category": "general", "type": "string"}
             ),
-            "labels": json.dumps({"en": "Site name", "fi": "Sivuston nimi"}),
+            "labels": json.dumps({"en": "Site name", "fi": "Site name"}),
         },
         {
             "key": "vantage_api_key",
             "value": json.dumps(
                 {"value": "", "category": "api_keys", "type": "string"}
             ),
-            "labels": json.dumps({"en": "Vantage API Key", "fi": "Vantage API-avain"}),
+            "labels": json.dumps({"en": "Vantage API Key", "fi": "Vantage API Key"}),
         },
         # --- Appearance settings ---
         {
@@ -65,11 +65,11 @@ def upgrade():
                     "category": "appearance",
                     "type": "enum",
                     "enum": [
-                        {"value": "light", "label": {"en": "Light", "fi": "Vaalea"}},
-                        {"value": "dark", "label": {"en": "Dark", "fi": "Tumma"}},
+                        {"value": "light", "label": {"en": "Light", "fi": "Light"}},
+                        {"value": "dark", "label": {"en": "Dark", "fi": "Dark"}},
                         {
                             "value": "system",
-                            "label": {"en": "System", "fi": "Järjestelmä"},
+                            "label": {"en": "System", "fi": "System"},
                         },
                     ],
                 }
@@ -77,7 +77,7 @@ def upgrade():
             "labels": json.dumps(
                 {
                     "en": "Theme (light/dark/system)",
-                    "fi": "Teema (vaalea/tumma/järjestelmä)",
+                    "fi": "Theme (light/dark/system)",
                 }
             ),
         },
@@ -87,7 +87,7 @@ def upgrade():
                 {"value": "#f9fafb", "category": "appearance", "type": "string"}
             ),
             "labels": json.dumps(
-                {"en": "Login background color", "fi": "Kirjautumisen taustaväri"}
+                {"en": "Login background color", "fi": "Login background color"}
             ),
         },
         {
@@ -98,7 +98,7 @@ def upgrade():
             "labels": json.dumps(
                 {
                     "en": "Login background color (dark)",
-                    "fi": "Kirjautumisen taustaväri (tumma)",
+                    "fi": "Login background color (dark)",
                 }
             ),
         },
@@ -107,9 +107,7 @@ def upgrade():
             "value": json.dumps(
                 {"value": "#fff", "category": "appearance", "type": "string"}
             ),
-            "labels": json.dumps(
-                {"en": "Login box color", "fi": "Kirjautumislaatikon väri"}
-            ),
+            "labels": json.dumps({"en": "Login box color", "fi": "Login box color"}),
         },
         {
             "key": "login_box_color_dark",
@@ -119,7 +117,7 @@ def upgrade():
             "labels": json.dumps(
                 {
                     "en": "Login box color (dark)",
-                    "fi": "Kirjautumislaatikon väri (tumma)",
+                    "fi": "Login box color (dark)",
                 }
             ),
         },
@@ -128,9 +126,7 @@ def upgrade():
             "value": json.dumps(
                 {"value": "#111827", "category": "appearance", "type": "string"}
             ),
-            "labels": json.dumps(
-                {"en": "Login text color", "fi": "Kirjautumisen tekstiväri"}
-            ),
+            "labels": json.dumps({"en": "Login text color", "fi": "Login text color"}),
         },
         {
             "key": "login_text_color_dark",
@@ -140,7 +136,7 @@ def upgrade():
             "labels": json.dumps(
                 {
                     "en": "Login text color (dark)",
-                    "fi": "Kirjautumisen tekstiväri (tumma)",
+                    "fi": "Login text color (dark)",
                 }
             ),
         },
@@ -149,7 +145,7 @@ def upgrade():
             "value": json.dumps(
                 {"value": "", "category": "appearance", "type": "string"}
             ),
-            "labels": json.dumps({"en": "Logo URL", "fi": "Logon URL"}),
+            "labels": json.dumps({"en": "Logo URL", "fi": "Logo URL"}),
         },
     ]
     conn = op.get_bind()

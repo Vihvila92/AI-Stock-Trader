@@ -42,7 +42,7 @@ def upgrade():
             typ = meta.get("type")
             enum = json.dumps(meta.get("enum")) if "enum" in meta else None
             default_value = meta.get("default") or meta.get("default_value") or None
-            # Päivitä rivi
+            # Update row
             conn.execute(
                 sa.text(
                     """

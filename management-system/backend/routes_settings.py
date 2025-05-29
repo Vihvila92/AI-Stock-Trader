@@ -39,7 +39,7 @@ async def get_optional_user(request: Request):
 async def get_settings(
     category: Optional[str] = Query(None), user=Depends(get_optional_user)
 ):
-    # Jos pyydetään appearance-kategoriaa, ei vaadita autentikointia
+    # If appearance category is requested, no authentication required
     if category == "appearance":
         async with AsyncSession(engine) as session:
             result = await session.execute(select(Setting))
@@ -106,7 +106,7 @@ async def update_setting(key: str, data: SettingUpdate, user=Depends(get_current
         setting = result.scalars().one_or_none()
         if not setting:
             raise HTTPException(status_code=404, detail="Setting not found")
-        # Päivitä vain value-sarake, älä koske muihin kenttiin
+        # Update only value column, don't touch other fields
         setattr(setting, "value", str(data.value))
         await session.commit()
         return {"status": "ok"}

@@ -1,4 +1,4 @@
-# Kehitystila (dev)
+# Development mode (dev)
 FROM node:18-alpine as dev
 WORKDIR /app
 COPY package*.json ./
@@ -7,22 +7,19 @@ COPY . .
 EXPOSE 3000
 CMD ["npm", "run", "dev"]
 
-# Tuotantotila (production)
+# Production mode (production)
 FROM node:18-alpine as production
 WORKDIR /app
 
-# Kopioi riippuvuudet ja asenna ne
+# Copy dependencies and install them
 COPY package*.json ./
 RUN npm ci --only=production
 
-# Kopioi lähdekoodi ja buildaa
+# Copy source code and build
 COPY . .
-RUN npm run build
-
-# Poista kehitysriippuvuudet
-RUN npm prune --production
+RUN npm run build && npm prune --production
 
 EXPOSE 3000
 
-# Käynnistä Next.js tuotannossa
+# Start Next.js in production
 CMD ["npm", "start"]

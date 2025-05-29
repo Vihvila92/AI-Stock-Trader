@@ -10,7 +10,7 @@ interface Setting {
   label?: string;
   category?: string;
   type?: string;
-  enum?: any; // voi olla string TAI array
+  enum?: any; // can be string OR array
 }
 
 // Utility: Format category name nicely
@@ -26,7 +26,7 @@ function formatCategoryName(cat: string) {
   return words.join(" ");
 }
 
-// Kovakoodattu välilehtien järjestys
+// Hard-coded tab order
 const CATEGORY_ORDER = [
   "general",
   "appearance",
@@ -109,12 +109,12 @@ export default function Settings() {
     );
   }
 
-  // Kerää kategoriat: kaikki uniikit, ei null/tyhjää, pakota string
+  // Collect categories: all unique, no null/empty, force string
   const categories = Array.from(
     new Set(settings.map((s) => String(s.category ?? ""))),
   ).filter(Boolean);
 
-  // Järjestä: ensin CATEGORY_ORDER-mukaiset, loput aakkosissa
+  // Sort: first CATEGORY_ORDER items, rest alphabetically
   categories.sort((a, b) => {
     const ia = CATEGORY_ORDER.indexOf(a);
     const ib = CATEGORY_ORDER.indexOf(b);
@@ -124,7 +124,7 @@ export default function Settings() {
     return ia - ib;
   });
 
-  // Fallback: jos activeTab ei löydy kategorioista, näytetään ensimmäinen
+  // Fallback: if activeTab not found in categories, show first one
   const shownTab = categories.includes(activeTab)
     ? activeTab
     : categories[0] || "";
@@ -181,28 +181,28 @@ export default function Settings() {
     // Refresh settings from backend
     if (success) {
       setEdited({});
-      await refresh(); // Päivitä appearance-asetukset contextiin
+      await refresh(); // Update appearance settings in context
       const res = await fetch("/api/settings", { headers: token });
       if (res.ok) {
         const data = await res.json();
         setSettings(data);
       }
-      // Pakotettu reload
+      // Forced reload
       window.location.reload();
     }
   };
 
   return (
     <DashboardLayout>
-      <h2 className="text-2xl font-semibold mb-4">Settings</h2>
-      <div className="bg-white rounded-lg shadow p-6">
+      <h2 className="mb-4 text-2xl font-semibold">Settings</h2>
+      <div className="rounded-lg bg-white p-6 shadow">
         {/* Tab navigation */}
-        <div className="border-b mb-4">
+        <div className="mb-4 border-b">
           <nav className="flex space-x-4" aria-label="Tabs">
             {categories.map((cat) => (
               <button
                 key={cat}
-                className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors duration-150 focus:outline-none ${
+                className={`border-b-2 px-4 py-2 text-sm font-medium transition-colors duration-150 focus:outline-none ${
                   shownTab === cat
                     ? "border-blue-500 text-blue-600"
                     : "border-transparent text-gray-500 hover:text-blue-600"
@@ -230,14 +230,14 @@ export default function Settings() {
                 return (
                   <div key={setting.key} className="mb-6">
                     <label
-                      className="font-semibold block mb-1"
+                      className="mb-1 block font-semibold"
                       htmlFor={setting.key}
                     >
                       {setting.label || setting.key}
                     </label>
                     <select
                       id={setting.key}
-                      className="border rounded px-3 py-2 w-full text-gray-800"
+                      className="w-full rounded border px-3 py-2 text-gray-800"
                       value={
                         edited[setting.key] !== undefined
                           ? edited[setting.key]
@@ -257,7 +257,7 @@ export default function Settings() {
                   </div>
                 );
               }
-              // Logo-url erikoiskäsittely (kuva, url, upload)
+              // Logo-url special handling (image, url, upload)
               if (setting.key === "logo_url") {
                 let logoUrl = edited[setting.key];
                 if (logoUrl === undefined) {
@@ -271,7 +271,7 @@ export default function Settings() {
                 return (
                   <div key={setting.key} className="mb-6">
                     <label
-                      className="font-semibold block mb-1"
+                      className="mb-1 block font-semibold"
                       htmlFor={setting.key}
                     >
                       {setting.label || setting.key}
@@ -295,7 +295,7 @@ export default function Settings() {
                       <input
                         id={setting.key}
                         type="text"
-                        className="border rounded px-3 py-2 w-full text-gray-800 mb-2"
+                        className="mb-2 w-full rounded border px-3 py-2 text-gray-800"
                         value={
                           edited[setting.key] !== undefined
                             ? edited[setting.key]
@@ -314,7 +314,7 @@ export default function Settings() {
                           handleInputChange(setting.key, e.target.value)
                         }
                         disabled={saving}
-                        placeholder="https://... tai /logo.png"
+                        placeholder="https://... or /logo.png"
                       />
                       <input
                         type="file"
@@ -344,19 +344,19 @@ export default function Settings() {
                           }
                         }}
                       />
-                      <div className="text-xs text-gray-500 mt-1">
-                        Voit antaa suoran url:n tai ladata logon (vain
-                        dev-ympäristössä).
+                      <div className="mt-1 text-xs text-gray-500">
+                        You can provide a direct URL or upload a logo (only in
+                        dev environment).
                       </div>
                     </div>
                   </div>
                 );
               }
-              // Muut asetukset
+              // Other settings
               return (
                 <div key={setting.key} className="mb-6">
                   <label
-                    className="font-semibold block mb-1"
+                    className="mb-1 block font-semibold"
                     htmlFor={setting.key}
                   >
                     {setting.label || setting.key}
@@ -370,7 +370,7 @@ export default function Settings() {
                           ? "number"
                           : "text"
                     }
-                    className="border rounded px-3 py-2 w-full text-gray-800"
+                    className="w-full rounded border px-3 py-2 text-gray-800"
                     value={
                       edited[setting.key] !== undefined
                         ? edited[setting.key]
@@ -394,7 +394,7 @@ export default function Settings() {
               );
             })}
           <button
-            className="bg-blue-600 text-white px-6 py-2 rounded shadow hover:bg-blue-700 disabled:opacity-50"
+            className="rounded bg-blue-600 px-6 py-2 text-white shadow hover:bg-blue-700 disabled:opacity-50"
             onClick={handleSave}
             disabled={saving || Object.keys(edited).length === 0}
           >
