@@ -1,10 +1,6 @@
 # Node.js
 node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
-.npm
+.npm/
 .yarn-integrity
 .next/
 out/
@@ -13,61 +9,42 @@ dist/
 .cache/
 
 # Environment variables
-.env
-.env.*
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env*
 
 # OS
 .DS_Store
-.DS_Store?
-._*
 .Spotlight-V100
 .Trashes
 ehthumbs.db
 Thumbs.db
+Icon?
 
 # Python
 __pycache__/
 *.py[cod]
-*$py.class
 *.so
-*.egg
-*.egg-info/
+*.egg*
 dist/
 build/
 *.whl
-.Python
-develop-eggs/
-downloads/
-eggs/
 .eggs/
-lib/
-lib64/
+lib*/
 parts/
 sdist/
 var/
 wheels/
-*.egg-info/
 .installed.cfg
 MANIFEST
-
-# Virtual environments
-venv/
-.venv/
-env/
-.env/
-ENV/
+venv*/
+.env*/
+ENV*/
 env.bak/
 venv.bak/
 pyvenv.cfg
 
 # Testing
 .pytest_cache/
-.coverage
-.coverage.*
+.coverage*
 coverage.xml
 *.cover
 .hypothesis/
@@ -77,11 +54,9 @@ htmlcov/
 nosetests.xml
 coverage/
 
-# VSCode
+# VSCode & IDEs
 .vscode/
 *.code-workspace
-
-# IDEs
 .idea/
 *.swp
 *.swo
@@ -92,11 +67,11 @@ coverage/
 .dockerignore
 
 # Build artifacts
+out/
 dist/
 build/
-out/
 
-# Postgres Docker volume (optional, if you want to ignore local db data)
+# Postgres Docker volume & local db data
 pgdata/
 management-system/db/
 management-system/pgdata/
@@ -110,17 +85,13 @@ management-system/pgdata/
 # TypeScript
 *.tsbuildinfo
 
-# Next.js specific
+# Next.js
 .next/
 out/
 
-# Misc
-coverage/
-
 # Project-specific paths
 management-system/backend/__pycache__/
-management-system/backend/.env
-management-system/backend/.env.*
+management-system/backend/.env*
 management-system/backend/venv/
 management-system/backend/.pytest_cache/
 management-system/backend/alembic/versions/*.pyc
@@ -131,10 +102,6 @@ management-system/frontend/.env.local
 
 # Ignore local dev/test files
 *.local
-
-# Mac specific
-Icon?
-.DS_Store
 
 # Ignore Docker Compose override files (optional)
 # docker-compose.override.yml
