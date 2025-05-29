@@ -11,12 +11,15 @@
   ],
   "devDependencies": {
     "husky": "^9.1.7",
-    "pre-commit": "^1.2.2"
+    "pre-commit": "^1.0.10"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/valtterivehvilainen/AI-Stock-Trader.git"
   },
   "author": "Valtteri Vehviläinen",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "next": "15.3.2"
+  }
 }
