@@ -42,7 +42,10 @@ async def test_configuration_management():
 
             # Test encrypted config
             success = await data_store.set_config(
-                "secret_key", "super_secret_123", "security", encrypt=True # pragma: allowlist secret
+                "secret_key",
+                "super_secret_123",
+                "security",
+                encrypt=True,  # pragma: allowlist secret
             )
             assert success, "Encrypted config storage failed"
             print("✓ Encrypted configuration storage successful")
@@ -50,8 +53,8 @@ async def test_configuration_management():
             # Test encrypted config retrieval
             secret = await data_store.get_config("secret_key")
             assert (
-                secret == "super_secret_123" # pragma: allowlist secret
-            ), f"Expected 'super_secret_123', got {secret}" # pragma: allowlist secret
+                secret == "super_secret_123"  # pragma: allowlist secret
+            ), f"Expected 'super_secret_123', got {secret}"  # pragma: allowlist secret
             print("✓ Encrypted configuration retrieval successful")
 
             # Test all config retrieval
