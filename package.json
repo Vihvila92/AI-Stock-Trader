@@ -1,0 +1,22 @@
+{
+  "name": "ai-stock-trader",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI Stock Trader - Full-stack application for automated stock trading",
+  "scripts": {
+    "prepare": "husky"
+  },
+  "workspaces": [
+    "management-system/frontend"
+  ],
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "pre-commit": "^1.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/valtterivehvilainen/AI-Stock-Trader.git"
+  },
+  "author": "Valtteri Vehviläinen",
+  "license": "MIT"
+}

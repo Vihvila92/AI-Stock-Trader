@@ -1,0 +1,12 @@
+# Backend requirements for FastAPI + PostgreSQL (async)
+fastapi
+uvicorn[standard]
+sqlalchemy[asyncio]
+asyncpg
+alembic
+psycopg2-binary
+bcrypt
+pydantic
+passlib[bcrypt]
+python-jose
+python-multipart

@@ -1,0 +1,40 @@
+# Development requirements for AI Stock Trader Backend
+# Install with: pip install -r requirements-dev.txt
+
+# Code Quality & Formatting
+black>=23.0.0                    # Python code formatter
+flake8>=6.0.0                    # Linting and style guide enforcement
+mypy>=1.0.0                      # Static type checker
+isort>=5.0.0                     # Import statement organizer
+bandit>=1.7.0                    # Security vulnerability scanner
+
+# Testing Framework
+pytest>=7.0.0                   # Testing framework
+pytest-asyncio>=0.21.0          # Async/await support for pytest
+pytest-cov>=4.0.0               # Coverage plugin for pytest
+pytest-mock>=3.10.0             # Mock object library
+httpx>=0.24.0                    # HTTP client for testing FastAPI
+
+# Development Tools
+pre-commit>=3.0.0                # Git hook scripts for quality checks
+ipython>=8.0.0                   # Enhanced Python REPL
+python-dotenv>=1.0.0             # Environment variable management
+
+# API Documentation
+mkdocs>=1.5.0                    # Documentation generator
+mkdocs-material>=9.0.0           # Material design theme for MkDocs
+
+# Database Development
+alembic>=1.11.0                  # Database migration tool
+factory-boy>=3.3.0               # Test data generation
+
+# Security Testing
+safety>=2.3.0                    # Vulnerability scanner for dependencies
+
+# Performance Monitoring
+memory-profiler>=0.61.0          # Memory usage profiler
+py-spy>=0.3.0                    # Sampling profiler
+
+# Type Stubs
+types-requests>=2.31.0           # Type stubs for requests
+types-python-jose>=3.3.4        # Type stubs for python-jose

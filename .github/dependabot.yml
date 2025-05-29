@@ -1,0 +1,57 @@
+version: 2
+updates:
+  # Frontend (Next.js) dependencies
+  - package-ecosystem: "npm"
+    directory: "/management-system/frontend"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    target-branch: "Dev"
+    labels:
+      - "dependencies"
+      - "frontend"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  # Backend (FastAPI) dependencies
+  - package-ecosystem: "pip"
+    directory: "/management-system/backend"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+    target-branch: "Dev"
+    labels:
+      - "dependencies"
+      - "backend"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  # Docker dependencies (Dockerfiles and base images)
+  - package-ecosystem: "docker"
+    directory: "/management-system"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
+    target-branch: "Dev"
+    labels:
+      - "dependencies"
+      - "docker"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "thursday"
+    target-branch: "Dev"
+    labels:
+      - "dependencies"
+      - "ci"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]

@@ -2,9 +2,9 @@ name: Build and push Docker images
 
 on:
   push:
-    branches: [main, test, dev]
+    branches: [main, Dev, Test]
   pull_request:
-    branches: [main, test, dev]
+    branches: [main, Dev, Test]
 
 jobs:
   build-and-push:
@@ -30,10 +30,10 @@ jobs:
             main)
               TAG="latest"
               ;;
-            test)
+            Test)
               TAG="test"
               ;;
-            dev)
+            Dev)
               TAG="dev"
               ;;
             *)
@@ -43,10 +43,19 @@ jobs:
           esac
           echo "tag=$TAG" >> $GITHUB_OUTPUT
 
-      - name: Build and push management system image
+      - name: Build and push backend image
         uses: docker/build-push-action@v5
         with:
-          context: ./management-system
-          file: ./management-system/Dockerfile
+          context: ./management-system/backend
+          file: ./management-system/backend/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ai-stock-trader-management:${{ steps.set_tag.outputs.tag }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ai-stock-trader-backend:${{ steps.set_tag.outputs.tag }}
+
+      - name: Build and push frontend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./management-system/frontend
+          file: ./management-system/frontend/Dockerfile
+          target: production
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ai-stock-trader-frontend:${{ steps.set_tag.outputs.tag }}

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.ai-stock-trader.node-agent</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/node-agent/venv/bin/python</string>
+        <string>/opt/node-agent/src/agent.py</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/opt/node-agent</string>
+
+    <key>StandardOutPath</key>
+    <string>/var/log/node-agent/agent.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/var/log/node-agent/agent_error.log</string>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>KeepAlive</key>
+    <dict>
+        <key>SuccessfulExit</key>
+        <false/>
+    </dict>
+
+    <key>ThrottleInterval</key>
+    <integer>30</integer>
+
+    <key>UserName</key>
+    <string>root</string>
+
+    <key>GroupName</key>
+    <string>wheel</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/opt/node-agent/venv/bin:/usr/local/bin:/usr/bin:/bin</string>
+        <key>NODE_AGENT_CONFIG</key>
+        <string>/etc/node-agent/config.json</string>
+    </dict>
+</dict>
+</plist>
